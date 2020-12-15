@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        <h3>{{ article.title }}</h3>
+        <div class="metadata">Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}</div>
+        <div class="content">
+            <img src="{{ article.image }}" alt="">
+            <br/>
+            {{ article.entete | raw }}
+        </div>
+        <div class="contenu">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint alias, aut
+                mollitia porro odit eius officia labore tempora quam ea esse dignissimos
+                repellat saepe nam voluptatum voluptas natus, sed fugiat. Perspiciatis quae
+                eum voluptas natus praesentium. Laboriosam, fugiat autem. Laboriosam labore
+                fugiat culpa adipisci? Non recusandae totam maiores pariatur voluptatem nam
+                numquam, repudiandae magni obcaecati nihil excepturi eveniet sunt vero,
+                cupiditate, aliquam esse nostrum hic quia cum! Laborum, hic officia omnis
+                neque autem ab asperiores iste exercitationem! Deleniti adipisci quam tenetur,
+                amet cupiditate voluptatem illo iusto sint fugiat! Vel pariatur autem, dolor
+                numquam dignissimos illo quidem consequuntur, deleniti nam quis dolore?
+                Eius at, accusamus unde animi vel recusandae. Numquam doloribus voluptatibus
+                explicabo at! Nemo dolorum cum vitae magni accusamus beatae corrupti consequuntur
+                qui consequatur animi. Voluptatem consequuntur nobis sit aperiam consectetur ad sint.
+                Harum id qui, sit deleniti rem vitae natus aspernatur dolores, corporis, ab consequuntur
+                veritatis reiciendis vero incidunt.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint alias, aut
+                mollitia porro odit eius officia labore tempora quam ea esse dignissimos
+                repellat saepe nam voluptatum voluptas natus, sed fugiat. Perspiciatis quae
+                eum voluptas natus praesentium. Laboriosam, fugiat autem. Laboriosam labore
+                fugiat culpa adipisci? Non recusandae totam maiores pariatur voluptatem nam
+                numquam, repudiandae magni obcaecati nihil excepturi eveniet sunt vero,
+                cupiditate, aliquam esse nostrum hic quia cum! Laborum, hic officia omnis
+                neque autem ab asperiores iste exercitationem! Deleniti adipisci quam tenetur,
+                amet cupiditate voluptatem illo iusto sint fugiat! Vel pariatur autem, dolor
+                numquam dignissimos illo quidem consequuntur, deleniti nam quis dolore?
+                Eius at, accusamus unde animi vel recusandae. Numquam doloribus voluptatibus
+                explicabo at! Nemo dolorum cum vitae magni accusamus beatae corrupti consequuntur
+                qui consequatur animi. Voluptatem consequuntur nobis sit aperiam consectetur ad sint.
+                Harum id qui, sit deleniti rem vitae natus aspernatur dolores, corporis, ab consequuntur
+                veritatis reiciendis vero incidunt.</p>
+        </div>
+    </article>
+{% endblock %}
