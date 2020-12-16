@@ -15,34 +15,34 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
 
-    /**
-     * @Route("/inscription", name="security_registration")
-     */
+    // /**
+    //  * @Route("/inscription", name="security_registration")
+    //  */
 
-    public function registration(Request $request, EntityManagerInterface $manager,
-    UserPasswordEncoderInterface $encoder) {
-        $user = new Users();
+    // public function registration(Request $request, EntityManagerInterface $manager,
+    // UserPasswordEncoderInterface $encoder) {
+    //     $user = new Users();
 
-        $form = $this->createForm(RegistrationType::class, $user);
+    //     $form = $this->createForm(RegistrationType::class, $user);
 
-        $form->handleRequest($request);
+    //     $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $hash = $encoder->encodePassword($user, $user->getPassword());
+    //     if($form->isSubmitted() && $form->isValid()) {
+    //         $hash = $encoder->encodePassword($user, $user->getPassword());
 
-            $user->setPassword($hash);
+    //         $user->setPassword($hash);
 
-            $manager->persist($user);
-            $manager->flush();
+    //         $manager->persist($user);
+    //         $manager->flush();
 
-            return $this->redirectToRoute('security_login');
+    //         return $this->redirectToRoute('security_login');
 
-        }
+    //     }
 
-        return $this->render('security/registration.html.twig',
-            ['form' => $form->createView()
-        ]);
-    }
+    //     return $this->render('security/registration.html.twig',
+    //         ['form' => $form->createView()
+    //     ]);
+    // }
 
 
     /**

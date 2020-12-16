@@ -16,33 +16,27 @@
             </button>
         
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/back">Admin</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/back/new">Nouvel Article</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/back/articles">Articles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Commentaires</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Catégories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Modifier</a>
-                    </li>
-
-
-                    
+                <ul class="navbar-nav mr-auto">        
                     {% if not app.user %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
                         </li>
                     {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('back') }}">Admin</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ path('back_create') }}">Nouvel Article</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('back_liste_articles') }}">Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Commentaires</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Catégories</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>
                         </li>
