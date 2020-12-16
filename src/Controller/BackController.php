@@ -21,13 +21,14 @@ class BackController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/", name="login")
-    //  */
-    // public function login() {
-    //     return $this->render('back/login.html.twig');
-    // }
+    /**
+     * @Route("/out", name="out")
+     */
+    public function out() {
+        return $this->render('out.html.twig');
+    }
 
+    
     /**
      * @Route("/back/articles", name="back_liste_articles")
      */
