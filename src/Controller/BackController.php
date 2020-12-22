@@ -71,7 +71,6 @@ class BackController extends AbstractController
             $article = new Article();
         }
 
-
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
@@ -80,7 +79,7 @@ class BackController extends AbstractController
             if(!$article->getId()) {
                 $article->setCreatedAt(new \DateTime());
             }
-            $article->setAuteur('Gabrielle');
+            // $article->setAuteur('Gabrielle');
 
 
             $manager->persist($article);

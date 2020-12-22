@@ -3,22 +3,22 @@
 {% block body %}
 
     <br/>
-    <br/>
 
     {% for article in articles %}
         <article>
-            <h3>{{ article.title }}</h3>
+            <a href="{{ path('back_edit', {'id': article.id}) }}"><h1>{{ article.title }}</h1></a>
             <div class="metadata">
                 Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
+                <br/>
+                {{ article.author }}
             </div>
-
-            <br/> 
 
             <div class="content">
                 <img src="{{ article.image }}" alt="">
                 <br/>
                 {{ article.entete | raw }}
             </div>
+            <br/>
             <a href="{{ path('back_edit', {'id': article.id}) }}" class="btn btn-primary">Modifier</a>
         </article>
         <br/>

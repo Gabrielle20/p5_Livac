@@ -22,14 +22,26 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=5)
+     * @Assert\Length(min = 3, minMessage = "Le titre de l'article doit faire au moins 3 caractères")
      */
     private $title;
 
     /**
+     * @ORM\Column(type="text")
+     * @Assert\Length(min = 150, minMessage = "Votre article doit faire plus de 150 caractères")
+     */
+    private $content;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message = "L'url de votre image n'est pas valide")
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Auteur;
+    private $entete;
 
     /**
      * @ORM\Column(type="datetime")
@@ -38,30 +50,11 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
+     * @Assert\AtLeastOneOf({
+     *      @Assert\Regex("/ /")
+     * })
      */
-    private $image;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $entete;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\Length(min=100, minMessage="Le contenu de l'article doit faire plus de 100 caractères")
-     */
-    private $contenu;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $categorie;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="article", orphanRemoval=true)
-     */
-    private $commentaires;
+    private $author;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
@@ -69,9 +62,14 @@ class Article
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
-        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,26 +89,14 @@ class Article
         return $this;
     }
 
-    public function getAuteur(): ?string
+    public function getContent(): ?string
     {
-        return $this->Auteur;
+        return $this->content;
     }
 
-    public function setAuteur(string $Auteur): self
+    public function setContent(string $content): self
     {
-        $this->Auteur = $Auteur;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+        $this->content = $content;
 
         return $this;
     }
@@ -139,56 +125,26 @@ class Article
         return $this;
     }
 
-    public function getContenu(): ?string
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->contenu;
+        return $this->createdAt;
     }
 
-    public function setContenu(string $contenu): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->contenu = $contenu;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCategorie(): ?string
+    public function getAuthor(): ?string
     {
-        return $this->categorie;
+        return $this->author;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setAuthor(string $author): self
     {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Commentaires[]
-     */
-    public function getCommentaires(): Collection
-    {
-        return $this->commentaires;
-    }
-
-    public function addCommentaire(Commentaires $commentaire): self
-    {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaire(Commentaires $commentaire): self
-    {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getArticle() === $this) {
-                $commentaire->setArticle(null);
-            }
-        }
+        $this->author = $author;
 
         return $this;
     }
@@ -201,6 +157,36 @@ class Article
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
 
         return $this;
     }

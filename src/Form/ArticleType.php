@@ -6,7 +6,6 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ArticleType extends AbstractType
 {
@@ -14,18 +13,10 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('content')
             ->add('image')
             ->add('entete')
-            ->add('contenu')
-            ->add('categorie', ChoiceType::class, [
-                'choices' => [
-                    '' => null,
-                    'Politique' => "Politique",
-                    'Société' => "Société",
-                    'Juridique' => "Juridique",
-                    'Autre' => "Autre"
-                ]
-            ])
+            ->add('author')
         ;
     }
 

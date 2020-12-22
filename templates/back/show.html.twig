@@ -6,19 +6,22 @@
         <div class="metadata">
             Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}} ;
             <br/>
-            Catégorie : {{ article.categorie }}
+            {# Catégorie : {{ article.categorie }} #}
+            {{ article.author }}
+            <br/>
         </div>
 
         <div class="content">
-            <img src="{{ article.image }}" alt="">
-            <br/><br/>
             {{ article.entete | raw }}
+            <br/>
+            <img src="{{ article.image }}" alt="">
+            <br/>
         </div>
 
         <br/> 
 
         <div class="contenu">
-            {{ article.contenu | raw }}
+            {{ article.content | raw }}
         </div>
     </article>
 {% endblock %}

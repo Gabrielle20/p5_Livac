@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentairesRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CommentairesRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-class Commentaires
+class Comment
 {
     /**
      * @ORM\Id
@@ -20,12 +20,12 @@ class Commentaires
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $auteur;
+    private $author;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $contenu;
+    private $content;
 
     /**
      * @ORM\Column(type="datetime")
@@ -33,12 +33,12 @@ class Commentaires
     private $createdAt;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $signalement;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;
@@ -48,26 +48,26 @@ class Commentaires
         return $this->id;
     }
 
-    public function getAuteur(): ?string
+    public function getAuthor(): ?string
     {
-        return $this->auteur;
+        return $this->author;
     }
 
-    public function setAuteur(string $auteur): self
+    public function setAuthor(string $author): self
     {
-        $this->auteur = $auteur;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getContenu(): ?string
+    public function getContent(): ?string
     {
-        return $this->contenu;
+        return $this->content;
     }
 
-    public function setContenu(string $contenu): self
+    public function setContent(string $content): self
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
 
         return $this;
     }
@@ -84,12 +84,12 @@ class Commentaires
         return $this;
     }
 
-    public function getSignalement(): ?bool
+    public function getSignalement(): ?int
     {
         return $this->signalement;
     }
 
-    public function setSignalement(?bool $signalement): self
+    public function setSignalement(?int $signalement): self
     {
         $this->signalement = $signalement;
 
