@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Vous êtes bien arrivés à la liste des articles !</h1>
+
+    <br/>
+    <br/>
 
     {% for article in articles %}
         <article>
@@ -19,6 +21,8 @@
             </div>
             <a href="{{ path('back_edit', {'id': article.id}) }}" class="btn btn-primary">Modifier</a>
         </article>
+        <br/>
+        <br/>
         <br/>
     {% endfor %}
 {% endblock %}

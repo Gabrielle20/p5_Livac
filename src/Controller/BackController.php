@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Entity\Article;
-use App\Form\ArticleType;
+use App\Entity\Category;
 
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,23 @@ class BackController extends AbstractController
         return $this->render('out.html.twig');
     }
 
+    /**
+     * @Route("/back/category", name="back_category")
+     */
+
+    public function manageCategory(Request $request, EntityManagerInterface $manager) {
+        $category = new Category();
+
+        $form = $this->createFormBuilder($category)
+                     ->add('title')
+                     ->add('description')
+                     ->add('articles')
+                     ->getForm();
+
+        return $this->render('back/category.html.twig');
+    }
+
+
     
     /**
      * @Route("/back/articles", name="back_liste_articles")
@@ -53,21 +71,6 @@ class BackController extends AbstractController
             $article = new Article();
         }
 
-        // $form = $this->createFormBuilder($article)
-        //              ->add('title')
-        //              ->add('entete')
-        //              ->add('image')
-        //              ->add('contenu')
-        //              ->add('categorie', ChoiceType::class, [
-        //                  'choices' => [
-        //                      '' => null,
-        //                      'Politique' => "Politique",
-        //                      'Société' => "Société",
-        //                      'Juridique' => "Juridique",
-        //                      'Autre' => "Autre"
-        //                  ]
-        //              ])
-        //              ->getForm();
 
         $form = $this->createForm(ArticleType::class, $article);
 

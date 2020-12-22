@@ -37,6 +37,12 @@ class Commentaires
      */
     private $signalement;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Commentaires
     public function setSignalement(?bool $signalement): self
     {
         $this->signalement = $signalement;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }
