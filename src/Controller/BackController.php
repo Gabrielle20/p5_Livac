@@ -69,7 +69,7 @@ class BackController extends AbstractController
         $articles = $repo->findAll();
 
         $lastTen = $articles->getLastTenArticles();
-
+        dd($articles->getLastTenArticles());
         return $this->render('back/articles.html.twig', ['articles' => $articles, 'lastTen' => $lastTen]);
     }
     
