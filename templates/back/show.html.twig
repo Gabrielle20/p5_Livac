@@ -4,18 +4,18 @@
     <article>
         <h1>{{ article.title }}</h1>
         <div class="metadata">
-            Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}} ;
+            Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
             <br/>
-            {# Catégorie : {{ article.categorie }} #}
-            {{ article.author }}
+            Catégorie : {{ article.category.title }}
+            <br/>
+            Auteur : {{ article.author }}
             <br/>
         </div>
 
         <div class="content">
-            {{ article.entete | raw }}
-            <br/>
             <img src="{{ article.image }}" alt="">
             <br/>
+            {{ article.entete | raw }}
         </div>
 
         <br/> 

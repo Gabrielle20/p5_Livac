@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Modifier une catégorie </h1>
+    
+    {{ form_start(formCategory) }}
+    
+    {{ form_row(formCategory.title, {'label':"Titre", 'attr': {'placeholder': "Titre de la catégorie"}}) }}
+    
+    <button type="submit" class="btn btn-success"> Modifier la catégorie</button>
+    
+    {{ form_end(formCategory) }}
+    
+    <br />
+    <br />
+    
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Articles</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <th scope="row"></th>
+            </tr>
+        </tbody>
+
+    </table>
+
+{% endblock %}

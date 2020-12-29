@@ -25,7 +25,7 @@
     
     {{ form_row(formArticle.author, {'label':"Auteur", 'attr': {'placeholder': "Auteur de l'article"}}) }}
     
-    {# {{ form_row(formArticle.categorie, {'label': "Catégorie de l'article", 'attr': {'placeholder': "Catégorie de l'article"}}) }} #}
+    {{ form_row(formArticle.category, {'label': "Catégorie de l'article", 'attr': {'placeholder': "Catégorie de l'article"}}) }}
 
     <button type="submit" class="btn btn-success">
         {% if editMode %}
@@ -34,7 +34,15 @@
             Ajouter l'article
         {% endif %}
     </button>
+    
+    {% if editMode %}
+        <a href="" class="btn btn-danger">
+            Supprimer l'article
+        </a>
+    {% endif %}
 
     {{ form_end(formArticle) }}
 
 {% endblock %}
+
+{# {{ path('back_delete_article', {'id': article.id})}} #}

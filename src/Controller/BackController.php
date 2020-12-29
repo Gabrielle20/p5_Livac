@@ -7,7 +7,9 @@ use App\Entity\Article;
 use App\Entity\Category;
 
 use App\Form\ArticleType;
+use App\Form\CategoryType;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,12 +28,19 @@ class BackController extends AbstractController
         ]);
     }
 
+
+
+
     /**
      * @Route("/out", name="out")
      */
     public function out() {
         return $this->render('out.html.twig');
     }
+
+
+
+
 
     /**
      * @Route("/back/category", name="back_category")
@@ -50,6 +59,8 @@ class BackController extends AbstractController
     }
 
 
+
+
     
     /**
      * @Route("/back/articles", name="back_liste_articles")
@@ -57,9 +68,14 @@ class BackController extends AbstractController
     public function getBackListArticles(ArticleRepository $repo) {
         $articles = $repo->findAll();
 
-        return $this->render('back/articles.html.twig', ['articles' => $articles]);
+        $lastTen = $articles->getLastTenArticles();
+
+        return $this->render('back/articles.html.twig', ['articles' => $articles, 'lastTen' => $lastTen]);
     }
     
+
+
+
 
     /**
      * @Route("/back/new", name="back_create")
@@ -79,8 +95,6 @@ class BackController extends AbstractController
             if(!$article->getId()) {
                 $article->setCreatedAt(new \DateTime());
             }
-            // $article->setAuteur('Gabrielle');
-
 
             $manager->persist($article);
             $manager->flush();
@@ -93,6 +107,107 @@ class BackController extends AbstractController
             'editMode' => $article->getId() !== null
         ]);
     }
+
+
+
+
+
+    /**
+     * @Route("/back/{id}/delete", name="back_delete")
+     */
+    public function delete(Article $article = null, Request $request, EntityManagerInterface $manager) {
+        $article = new Article();
+        $article = $manager->getRepository(Article::class, $article)->find($id);
+
+        $manager->remove($article);
+        $manager->flush();
+
+        return $this->renderToRoute('back/articles.html.twig', [
+            'id' => $article->getId()
+        ]);
+
+    }
+
+
+
+
+
+    /**
+     * @Route("/back/category", name="back_category")
+     */
+    public function category(Category $category = null, Request $request, EntityManagerInterface $manager,
+    CategoryRepository $repo, ArticleRepository $articleRepo) {
+        $category = new Category();
+
+        $form = $this->createFormBuilder($category)
+                     ->add('title')
+                     ->getForm();
+
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($category);
+            $manager->flush();
+
+            return $this->redirectToRoute('back_category');
+        }
+
+        $category = $repo->findAll();
+
+        // $categoryName = $repo->getId($category);
+
+        // foreach($categoryName as $categoryName) {
+            $totalArticles = $articleRepo->createQueryBuilder("article")->select('count(article.category)')
+                                         ->getQuery()
+                                         ->getSingleScalarResult();
+        // }
+        
+        
+        
+        return $this->render('back/category.html.twig', [
+            'formCategory' => $form->createView(),
+            'category'     => $category,
+            'totalCategories' => $totalArticles
+        ]);
+
+    }
+
+
+
+
+    /**
+     * @Route("back/category/{id}/edit", name="back_edit_category")
+     */
+    public function editCategory(Category $category, ArticleRepository $articleRepo,
+    Request $request, EntityManagerInterface $manager) {
+        $form = $this->createFormBuilder($category)
+                     ->add('title')
+                     ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($category);
+            $manager->flush();
+
+            return $this->redirectToRoute('back_category');
+        }
+
+        $listArticles = $articleRepo->createQueryBuilder("article")->select('article.title')
+                                    ->getQuery();
+                                    
+
+        return $this->render('back/editCategory.html.twig', [
+            'formCategory' => $form->createView(),
+            'listArticles' => $listArticles
+        ]);
+
+    }
+
+
+
+
 
 
     /**

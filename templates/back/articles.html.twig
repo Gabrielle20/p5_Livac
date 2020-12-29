@@ -6,9 +6,11 @@
 
     {% for article in articles %}
         <article>
-            <a href="{{ path('back_edit', {'id': article.id}) }}"><h1>{{ article.title }}</h1></a>
+            <h1>{{ article.title }}</h1>
             <div class="metadata">
                 Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
+                <br/>
+                Catégorie : {{ article.category.title }}
                 <br/>
                 {{ article.author }}
             </div>
