@@ -21,12 +21,21 @@ class BackController extends AbstractController
     /**
      * @Route("/back", name="back")
      */
-    public function index(): Response
+    public function index(EntityManagerInterface $manager, CategoryRepository $repo): Response
     {
+        $queryArticles = $manager->createQuery('SELECT a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a ORDER BY a.id DESC');
+        $lastTenArticles = $queryArticles->getResult();
+        // dd($lastTenArticles);
+
+        $allCategories = $repo->findAll();
+
         return $this->render('back/index.html.twig', [
             'controller_name' => 'BackController',
+            'lastTenArticles' => $lastTenArticles,
+            'allCategories'   => $allCategories
         ]);
     }
+
 
 
 
@@ -40,27 +49,6 @@ class BackController extends AbstractController
 
 
 
-
-
-    /**
-     * @Route("/back/category", name="back_category")
-     */
-
-    public function manageCategory(Request $request, EntityManagerInterface $manager) {
-        $category = new Category();
-
-        $form = $this->createFormBuilder($category)
-                     ->add('title')
-                     ->add('description')
-                     ->add('articles')
-                     ->getForm();
-
-        return $this->render('back/category.html.twig');
-    }
-
-
-
-
     
     /**
      * @Route("/back/articles", name="back_liste_articles")
@@ -68,9 +56,7 @@ class BackController extends AbstractController
     public function getBackListArticles(ArticleRepository $repo) {
         $articles = $repo->findAll();
 
-        $lastTen = $articles->getLastTenArticles();
-
-        return $this->render('back/articles.html.twig', ['articles' => $articles, 'lastTen' => $lastTen]);
+        return $this->render('back/articles.html.twig', ['articles' => $articles]);
     }
     
 
@@ -116,14 +102,18 @@ class BackController extends AbstractController
      * @Route("/back/{id}/delete", name="back_delete")
      */
     public function delete(Article $article = null, Request $request, EntityManagerInterface $manager) {
-        $article = new Article();
-        $article = $manager->getRepository(Article::class, $article)->find($id);
+        // $article = new Article();
+        // $article = $manager->getRepository(Article::class, $article)->find($id);
 
-        $manager->remove($article);
-        $manager->flush();
+        // $manager->remove($article);
+        // $manager->flush();
+
+        $delete = $manager->createQuery('DELETE a.id FROM App\Entity\Article a');
+        $deleted = $query->getResult();
 
         return $this->renderToRoute('back/articles.html.twig', [
-            'id' => $article->getId()
+            // 'id' => $article->getId()
+            'deleted' =>$deleted
         ]);
 
     }
@@ -194,17 +184,20 @@ class BackController extends AbstractController
             return $this->redirectToRoute('back_category');
         }
 
-        $listArticles = $articleRepo->createQueryBuilder("article")->select('article.title')
-                                    ->getQuery();
+
+        $listArticlesPerCategory = $articleRepo->createQueryBuilder("article")
+                                                ->select('a.title')
+                                                ->from('article', 'a')
+                                                ->getQuery();
                                     
+        // $listArticlesPerCategory->handleRequest($request);
 
         return $this->render('back/editCategory.html.twig', [
             'formCategory' => $form->createView(),
-            'listArticles' => $listArticles
+            'listArticlesPerCategory' => $listArticlesPerCategory
         ]);
 
     }
-
 
 
 

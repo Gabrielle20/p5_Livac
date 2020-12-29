@@ -191,16 +191,4 @@ class Article
         return $this;
     }
 
-    public function getLastTenArticles() {
-        $table = Doctrine::getTable($article['Article']);
-
-        foreach($titles as $title) {
-            $title = $title;
-
-            $table->createQuery()
-                  ->get($article['title'])
-                  ->limit('10')
-                  ->execute();
-        }
-    }
 }
