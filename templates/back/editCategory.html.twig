@@ -19,14 +19,20 @@
         <thead>
             <tr class="table-active">
                 <th scope="col">Articles</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Date</th>
             </tr>
         </thead>
 
-        <tbody>
-            <tr>
-                <th scope="row"></th>
-            </tr>
-        </tbody>
+        {% for ArticlePerCategory in listArticlesPerCategory %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ ArticlePerCategory.title }}</th>
+                    <th scope="row">{{ ArticlePerCategory.author }}</th>
+                    <th scope="row">{{ ArticlePerCategory.createdAt | date('d/m/Y') }}</th>
+                </tr>
+            </tbody>
+        {% endfor %}
 
     </table>
 

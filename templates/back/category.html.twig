@@ -31,11 +31,11 @@
                     <th scope="row">{{ category.title }}</th>
                     <td>{{ totalCategories|raw }}</td>
                     <td><a href="{{ path('back_edit_category', {'id': category.id}) }}" class="btn btn-primary">Modifier</a>
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <a href="{{ path('back_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a>
+                        <!-- <button type="submit" class="btn btn-danger">Supprimer</button> -->
                     </td>
                 </tr>
             </tbody>
         {% endfor %}
     </table>
-
 {% endblock %}

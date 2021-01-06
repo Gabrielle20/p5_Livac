@@ -102,18 +102,14 @@ class BackController extends AbstractController
      * @Route("/back/{id}/delete", name="back_delete")
      */
     public function delete(Article $article = null, Request $request, EntityManagerInterface $manager) {
-        // $article = new Article();
-        // $article = $manager->getRepository(Article::class, $article)->find($id);
 
-        // $manager->remove($article);
-        // $manager->flush();
-
-        $delete = $manager->createQuery('DELETE a.id FROM App\Entity\Article a');
-        $deleted = $query->getResult();
-
-        return $this->renderToRoute('back/articles.html.twig', [
+        $delete = $manager->createQuery('DELETE App\Entity\Article a');
+        // $deleted = $delete->getResult();
+        // dd($delete);
+        
+        return $this->redirectToRoute('back_liste_articles', [
             // 'id' => $article->getId()
-            'deleted' =>$deleted
+            // 'deleted' =>$deleted
         ]);
 
     }
@@ -169,7 +165,7 @@ class BackController extends AbstractController
     /**
      * @Route("back/category/{id}/edit", name="back_edit_category")
      */
-    public function editCategory(Category $category, ArticleRepository $articleRepo,
+    public function editCategory(int $id, Category $category, ArticleRepository $articleRepo,
     Request $request, EntityManagerInterface $manager) {
         $form = $this->createFormBuilder($category)
                      ->add('title')
@@ -184,13 +180,8 @@ class BackController extends AbstractController
             return $this->redirectToRoute('back_category');
         }
 
-
-        $listArticlesPerCategory = $articleRepo->createQueryBuilder("article")
-                                                ->select('a.title')
-                                                ->from('article', 'a')
-                                                ->getQuery();
-                                    
-        // $listArticlesPerCategory->handleRequest($request);
+        $queryArticlesPerCategory = $manager->createQuery('SELECT a.title, a.author, a.createdAt FROM App\Entity\Article a');
+        $listArticlesPerCategory = $queryArticlesPerCategory->getResult();            
 
         return $this->render('back/editCategory.html.twig', [
             'formCategory' => $form->createView(),
