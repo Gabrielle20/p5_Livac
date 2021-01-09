@@ -36,12 +36,11 @@
     </button>
     
     {% if editMode %}
-        <a href="" class="btn btn-danger">
+        <a href="{{ path('back_delete', {'id': id }) }}" class="btn btn-danger">
             Supprimer l'article
         </a>
     {% endif %}
 
     {{ form_end(formArticle) }}
 
-    {# {{ path('back_delete_article', {'id': article.id})}} #}
 {% endblock %}

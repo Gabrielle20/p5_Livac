@@ -5,26 +5,42 @@
 
     <br/>
 
-    <div class="lastArticles">
-        <h5>Derniers articles postés :</h5>
-        {% for lastArticle in lastTenArticles %}
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ lastArticle.title }}</h5>
-                    <small>{{ lastArticle.createdAt | date('d/m/Y') }}</small>
+    <div class="row">
+        <div class="col-6">
+            <div class="lastArticles">
+                <h5>Derniers articles postés :</h5>
+                {% for lastArticle in lastTenArticles %}
+                <div class="list-group">
+                    <a href="{{ path('back_edit', {'id': lastArticle.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ lastArticle.title }}</h5>
+                            <small>{{ lastArticle.createdAt | date('d/m/Y') }}</small>
+                        </div>
+                        <p class="mb-1">{{ lastArticle.entete }}</p>
+                        <small>{{ lastArticle.author }}</small>
+                    </a>
                 </div>
-                <p class="mb-1">{{ lastArticle.entete }}</p>
-                <small>{{ lastArticle.author }}</small>
-            </a>
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
-    </div>
-    <br /> <br />
-
-
-    <div class="lastCommentaires">
-        <h5>Derniers commentaires postés :</h5>
+    
+        <div class="col-6">
+            <div class="lastCommentaires">
+                <h5>Derniers commentaires postés :</h5>
+                {% for lastComment in lastTenComments %}
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <small>{{ lastComment.createdAt | date('d/m/Y')}}</small>
+                               
+                            </div>
+                            <p class="mb-1">{{ lastComment.content }}</p>
+                            <small>{{ lastComment.author }}</small>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
     <br/> <br/>

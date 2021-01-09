@@ -1,27 +1,65 @@
 {% extends 'baseFront.html.twig' %}
 
+
+
 {% block body %}
-    <article>
-        <h1>{{ article.title }}</h1>
-        <div class="metadata">
-            Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
-            <br/>
-            Catégorie : {{ article.category.title }}
-            <br/>
-            Auteur : {{ article.author }}
-            <br/>
-        </div>
+<article>
+    <h1>{{ article.title }}</h1>
+    <div class="metadata">
+        Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
+        <br />
+        Catégorie : {{ article.category.title }}
+        <br />
+        Auteur : {{ article.author }}
+        <br />
+    </div>
 
-        <div class="content">
-            <img src="{{ article.image }}" alt="">
-            <br/>
-            {{ article.entete | raw }}
-        </div>
+    <div class="content">
+        <img src="{{ article.image }}" alt="">
+        <br />
+        {{ article.entete | raw }}
+    </div>
 
-        <br/> 
+    <br />
 
-        <div class="contenu">
-            {{ article.content | raw }}
+    <div class="contenu">
+        {{ article.content | raw }}
+    </div>
+</article>
+
+<br/><br/><br/>
+
+<div class="formComments">
+    <h3>Commentaires :</h3>
+    {{ form_start(formComment) }}
+
+    {{ form_row(formComment.author, {'label':"Nom", 'attr': {'placeholder': "Nom"}}) }}
+
+    {{ form_row(formComment.content, {'label': "Content", 'attr': {'placeholder': "Commentaire"}}) }}
+
+    <button type="submit" class="btn btn-success">Poster</button>
+
+    {{ form_end(formComment) }}
+
+</div>
+
+<br/><br/><br/>
+
+<div class="commentList">
+    {% for comment in article.comments %}
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <p class="mb-1">{{ comment.content }}</p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small>{{ comment.author }}</small>
+                    <small>{{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</small>
+                </div>
+            </a>
         </div>
-    </article>
+        <br/>
+    {% endfor %}
+</div>
+
+<br/><br/><br/>
+
 {% endblock %}

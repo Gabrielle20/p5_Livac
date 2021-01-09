@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Article;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -107,4 +108,6 @@ class Comment
 
         return $this;
     }
+
+   
 }

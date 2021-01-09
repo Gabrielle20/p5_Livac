@@ -4,17 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Entity\Article;
-use App\Entity\Category;
+use App\Entity\Comment;
 
+use App\Entity\Category;
 use App\Form\ArticleType;
 use App\Form\CategoryType;
+
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class BackController extends AbstractController
 {
@@ -23,15 +27,18 @@ class BackController extends AbstractController
      */
     public function index(EntityManagerInterface $manager, CategoryRepository $repo): Response
     {
-        $queryArticles = $manager->createQuery('SELECT a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a ORDER BY a.id DESC');
+        $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a ORDER BY a.id DESC');
         $lastTenArticles = $queryArticles->getResult();
-        // dd($lastTenArticles);
+    
+        $queryComments = $manager->createQuery('SELECT c.author, c.content, c.createdAt FROM App\Entity\Comment c ORDER BY c.id DESC');
+        $lastTenComments = $queryComments->getResult();
 
         $allCategories = $repo->findAll();
 
         return $this->render('back/index.html.twig', [
             'controller_name' => 'BackController',
             'lastTenArticles' => $lastTenArticles,
+            'lastTenComments' => $lastTenComments,
             'allCategories'   => $allCategories
         ]);
     }
@@ -58,7 +65,6 @@ class BackController extends AbstractController
 
         return $this->render('back/articles.html.twig', ['articles' => $articles]);
     }
-    
 
 
 
@@ -85,12 +91,13 @@ class BackController extends AbstractController
             $manager->persist($article);
             $manager->flush();
 
-            return $this->redirectToRoute('back_show', ['id' => $article->getId()]);
+            return $this->redirectToRoute('show', ['id' => $article->getId()]);
         }
 
         return $this->render('back/create.html.twig', [
             'formArticle' => $form->createView(),
-            'editMode' => $article->getId() !== null
+            'editMode' => $article->getId() !== null,
+            'id'       => $article->getId()
         ]);
     }
 
@@ -101,18 +108,33 @@ class BackController extends AbstractController
     /**
      * @Route("/back/{id}/delete", name="back_delete")
      */
-    public function delete(Article $article = null, Request $request, EntityManagerInterface $manager) {
+    public function delete($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
 
-        $delete = $manager->createQuery('DELETE App\Entity\Article a');
-        // $deleted = $delete->getResult();
-        // dd($delete);
+        $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
+        $deleted = $delete->getResult();
         
-        return $this->redirectToRoute('back_liste_articles', [
-            // 'id' => $article->getId()
-            // 'deleted' =>$deleted
-        ]);
+        return $this->redirectToRoute('back_liste_articles');
 
     }
+
+
+
+
+     /**
+     * @Route("/back/category/{id}/delete", name="back_delete_category")
+     */
+    public function deleteCategory($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
+
+        $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.category=' . $id);
+        $deleted = $delete->getResult();
+
+        $delete = $manager->createQuery('DELETE App\Entity\Category a WHERE a.id=' . $id);
+        $deleted = $delete->getResult();
+        
+        return $this->redirectToRoute('back_category');
+
+    }
+
 
 
 
@@ -141,13 +163,9 @@ class BackController extends AbstractController
 
         $category = $repo->findAll();
 
-        // $categoryName = $repo->getId($category);
-
-        // foreach($categoryName as $categoryName) {
-            $totalArticles = $articleRepo->createQueryBuilder("article")->select('count(article.category)')
+        $totalArticles = $articleRepo->createQueryBuilder("article")->select('count(article.category)')
                                          ->getQuery()
                                          ->getSingleScalarResult();
-        // }
         
         
         
@@ -180,6 +198,8 @@ class BackController extends AbstractController
             return $this->redirectToRoute('back_category');
         }
 
+
+        //Liste des articles de chaque catégories
         $queryArticlesPerCategory = $manager->createQuery('SELECT a.title, a.author, a.createdAt FROM App\Entity\Article a');
         $listArticlesPerCategory = $queryArticlesPerCategory->getResult();            
 
@@ -188,18 +208,6 @@ class BackController extends AbstractController
             'listArticlesPerCategory' => $listArticlesPerCategory
         ]);
 
-    }
-
-
-
-
-
-    /**
-     * @Route("/back/{id}", name="back_show")
-     */
-    public function show(Article $article) {
-
-        return $this->render('back/show.html.twig', ['article' => $article]);
     }
 
 }

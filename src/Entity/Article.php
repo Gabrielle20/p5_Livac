@@ -67,6 +67,11 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $section;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -187,6 +192,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
+    }
+
+    public function setSection(?string $section): self
+    {
+        $this->section = $section;
 
         return $this;
     }
