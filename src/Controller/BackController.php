@@ -6,13 +6,15 @@ use App\Entity\Users;
 use App\Entity\Article;
 use App\Entity\Comment;
 
+use App\Entity\Section;
 use App\Entity\Category;
 use App\Form\ArticleType;
+
 use App\Form\CategoryType;
-
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 
+use App\Repository\SectionRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -207,6 +209,60 @@ class BackController extends AbstractController
             'formCategory' => $form->createView(),
             'listArticlesPerCategory' => $listArticlesPerCategory
         ]);
+
+    }
+
+
+
+
+    /**
+     * @Route("/back/section", name="back_section")
+     */
+    public function section(Section $section = null, Request $request, EntityManagerInterface $manager,
+    SectionRepository $repo, ArticleRepository $articleRepo) {
+        $section = new Section();
+
+        $form = $this->createFormBuilder($section)
+                     ->add('title')
+                     ->getForm();
+
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($section);
+            $manager->flush();
+
+            return $this->redirectToRoute('back_section');
+        }
+
+        $section = $repo->findAll();
+
+        // $totalArticles = $articleRepo->createQueryBuilder("article")->select('count(article.category)')
+        //                                  ->getQuery()
+        //                                  ->getSingleScalarResult();
+        
+        
+        
+        return $this->render('back/section.html.twig', [
+            'formSection' => $form->createView(),
+            'section'     => $section
+            // 'totalCategories' => $totalArticles
+        ]);
+
+    }
+
+
+
+    /**
+     * @Route("/back/{id}/delete", name="back_delete_section")
+     */
+    public function deleteSection($id, Request $request, EntityManagerInterface $manager) {
+
+        $delete = $manager->createQuery('DELETE App\Entity\Section a WHERE a.id=' . $id);
+        $deleted = $delete->getResult();
+        
+        return $this->redirectToRoute('back_section');
 
     }
 

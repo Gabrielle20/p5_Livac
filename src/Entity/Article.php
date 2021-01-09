@@ -68,9 +68,10 @@ class Article
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="articles")
      */
     private $section;
+
 
     public function __construct()
     {
@@ -196,12 +197,12 @@ class Article
         return $this;
     }
 
-    public function getSection(): ?string
+    public function getSection(): ?Section
     {
         return $this->section;
     }
 
-    public function setSection(?string $section): self
+    public function setSection(?Section $section): self
     {
         $this->section = $section;
 

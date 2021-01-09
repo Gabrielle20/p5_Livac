@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formSection 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>Création d'une nouvelle section </h1>
+
+    {{ form_start(formSection) }}
+
+    {{ form_row(formSection.title, {'label':"Section", 'attr': {'placeholder': "Nom de la section"}}) }}
+
+    <button type="submit" class="btn btn-success"> Ajouter la section</button>
+
+    {{ form_end(formSection) }}
+
+    <br/>
+    <br/>
+
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Section</th>
+                <th scope="col">Nombre d'articles</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        {% for section in section %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ section.title }}</th>
+                   
+                    <td>
+                        {# <a href="{{ path('back_edit_section', {'id': category.id}) }}" class="btn btn-primary">Modifier</a> #}
+                        <a href="{{ path('back_delete_section', {'id': section.id}) }}" class="btn btn-danger">Supprimer</a>
+                        <!-- <button type="submit" class="btn btn-danger">Supprimer</button> -->
+                    </td>
+                    </td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

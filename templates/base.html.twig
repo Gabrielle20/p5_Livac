@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}ADMIN{% endblock %}</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        {% endblock %}
     </head>
 
     <body>
@@ -36,6 +37,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('back_category') }}">Catégories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('back_section') }}">Sections</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('security_registration') }}">Créer un compte</a>

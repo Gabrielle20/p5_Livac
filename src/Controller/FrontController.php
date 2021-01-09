@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Repository\ArticleRepository;
 
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,13 +18,29 @@ class FrontController extends AbstractController
     /**
      * @Route("/", name="front")
      */
-    public function index(ArticleRepository $articleRepo): Response
+    public function index(ArticleRepository $articleRepo, CategoryRepository $repo, EntityManagerInterface $manager): Response
     {
+        //SIDE LAST ARTICLES
+        $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a ORDER BY a.id DESC');
+        $lastTenArticles = $queryArticles->getResult();
+
+        //SIDE CATEGORIES  
+        $allCategories = $repo->findAll();
+
+        //MAIN
         $articles = $articleRepo->findAll();
+
+        //MAIN À LA UNE
+        $querySectionUne = $manager->createQuery('SELECT a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a');
+        $sectionUne = $querySectionUne->getResult();
+
 
         return $this->render('front/index.html.twig', [
             'controller_name' => 'FrontController',
-            'articles' => $articles
+            'articles' => $articles,
+            'lastTenArticles' => $lastTenArticles,
+            'allCategories' => $allCategories,
+            'sectionUne' => $sectionUne
         ]);
     }
 

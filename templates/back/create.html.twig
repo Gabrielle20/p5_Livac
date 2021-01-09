@@ -27,6 +27,8 @@
     
     {{ form_row(formArticle.category, {'label': "Catégorie de l'article", 'attr': {'placeholder': "Catégorie de l'article"}}) }}
 
+    {{ form_row(formArticle.section, {'label': "Section de l'article", 'attr': {'placeholder': "CatéSection de l'article"}}) }}
+
     <button type="submit" class="btn btn-success">
         {% if editMode %}
             Enregistrer les modifications
@@ -40,6 +42,8 @@
             Supprimer l'article
         </a>
     {% endif %}
+
+        <br/><br/>
 
     {{ form_end(formArticle) }}
 

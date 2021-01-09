@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Section;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +19,10 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
+                'choice_label' => 'title'
+            ])
+            ->add('section', EntityType::class, [
+                'class' => Section::class,
                 'choice_label' => 'title'
             ])
             ->add('author')
