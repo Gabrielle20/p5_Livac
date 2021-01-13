@@ -48,7 +48,6 @@ class BackController extends AbstractController
 
 
 
-
     /**
      * @Route("/out", name="out")
      */

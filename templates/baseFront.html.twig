@@ -43,6 +43,11 @@
         <div class="container">
             {% block body %}{% endblock %}
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="js/main.js"></script>
+            <script src="js/dataHandler.js"></script>
+            <script src="js/composant.js"></script>
+            <script src="js/diaporama.js"></script>
+        {% endblock %}
     </body>
 </html>

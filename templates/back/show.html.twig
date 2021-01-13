@@ -3,7 +3,9 @@
 
 
 {% block body %}
-<article>
+<br /><br />
+
+<article class="col-10">
     <h1>{{ article.title }}</h1>
     <div class="metadata">
         Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
@@ -48,13 +50,13 @@
 <div class="commentList">
     {% for comment in article.comments %}
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <p class="mb-1">{{ comment.content }}</p>
                 <div class="d-flex w-100 justify-content-between">
                     <small>{{ comment.author }}</small>
                     <small>{{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</small>
                 </div>
-            </a>
+            </div>
         </div>
         <br/>
     {% endfor %}
