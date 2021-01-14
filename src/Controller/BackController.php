@@ -24,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BackController extends AbstractController
 {
+
     /**
      * @Route("/back", name="back")
      */

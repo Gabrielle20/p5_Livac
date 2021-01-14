@@ -9,11 +9,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
+    private $session;
+
+    public function __construct(SessionInterface $session) {
+        $this->session = $session;
+    }
 
     /**
      * @Route("/inscription", name="security_registration")
@@ -48,8 +54,12 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="security_login")
      */
-    public function login() {
-         return $this->render('security/login.html.twig');
+    public function login(SessionInterface $session) {
+        // $userConnect = $session->get('userConnect', []);
+
+        // $session->set('userConnect', $userConnect);
+
+        return $this->render('security/login.html.twig');
     }
 
     /**
