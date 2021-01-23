@@ -1,0 +1,60 @@
+h1.login {
+    text-align:left;
+}
+
+
+.conatiner {
+    padding-right:0;
+    padding-left:0;
+}
+
+/* HOME */
+img {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.jumbotron {
+    padding:1rem;
+}
+
+.display-3 {
+    font-size:2rem;
+    text-align:center;
+}
+
+.lead {
+    font-size:1rem;
+}
+
+
+.row {
+    display:block;
+}
+
+.col-7 {
+    flex:none;
+}
+
+.col-4 {
+    -ms-flex: block;
+    flex:block;
+    max-width:100%;
+}
+
+.col-3 {
+    -ms-flex:block;
+    flex:block;
+    max-width:100%;
+}
+
+.card-body {
+    padding:0.5rem;
+}
+
+/* SHOW ARTICLE */
+h1 {
+    letter-spacing:normal;
+    text-align:center;
+}

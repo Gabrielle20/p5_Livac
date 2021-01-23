@@ -1,0 +1,15 @@
+.display-3 {
+    font-size:3.5rem;;
+}
+
+.row {
+    display: flex;
+}
+
+.col-4 {
+    max-width:33.333333%;
+}
+
+.col-3 {
+    display:flex;
+}

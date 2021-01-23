@@ -1,15 +1,25 @@
-/* h1 {
-    color:red;
-} */
+.dropdown {
+    position:relative;
+    display:inline-block;
+}
+
+.dropdown-menu {
+    display:none;
+    position:absolute;
+    z-index:1;
+}
+
+.nav-link:hover .dropdown-menu {
+    display:block
+}
+
+h1 .login {
+    text-align:left;
+}
 
 .col-7 {
     max-width: 100%;
 }
-
-/* .col-4 {
-    max-width: 100%;
-} */ 
-
 
 .jumbotron {
     padding: 2rem;

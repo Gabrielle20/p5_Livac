@@ -73,4 +73,15 @@ class FrontController extends AbstractController
             'comment'        => $comment
         ]);
     }
+
+
+    /**
+     * @Route("/api/news", name="api_news")
+     */
+    public function getNewsFromApi() {
+        // Se connecte à Doctrine
+        // Regarde si les infos sont trop vielles, si oui
+        // Récupère les nouvelles
+        // Enregistre les nouvelles infos dans Doctrine
+    }
 }
