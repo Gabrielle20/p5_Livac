@@ -78,7 +78,7 @@ class FrontController extends AbstractController
     /**
      * @Route("/api/news", name="api_news")
      */
-    public function getNewsFromApi() {
+    public function getNewsFromApi(APINews $apiNews, Request $request, EntityManagerInterface $manager) {
         // Se connecte à Doctrine
         // Regarde si les infos sont trop vielles, si oui
         // Récupère les nouvelles
