@@ -1,3 +1,8 @@
+img {
+    width: 500px;
+}
+
+
 .dropdown {
     position:relative;
     display:inline-block;

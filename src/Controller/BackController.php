@@ -3,22 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Users;
-use App\Entity\Article;
-use App\Entity\Comment;
 
+use App\Entity\Article;
+
+use App\Entity\Comment;
 use App\Entity\Section;
 use App\Entity\Category;
+
 use App\Form\ArticleType;
-
 use App\Form\CategoryType;
-use App\Repository\ArticleRepository;
 
+use App\Repository\ArticleRepository;
 use App\Repository\SectionRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -75,7 +77,7 @@ class BackController extends AbstractController
      * @Route("/back/new", name="back_create")
      * @Route("/back/{id}/edit", name="back_edit")
      */
-    public function form(Article $article = null, Request $request, EntityManagerInterface $manager) {
+    public function form(Article $article = null, Request $request, EntityManagerInterface $manager, SluggerInterface $slugger) {
         
         if(!$article) {
             $article = new Article();
@@ -83,12 +85,44 @@ class BackController extends AbstractController
 
         $form = $this->createForm(ArticleType::class, $article);
 
+        // /**@var UploadedFile $imageFile */
+        // $imageFile = $form->get('image')->getData();
+        // // dd($imageFile);
+                
+        // //Nécessaire car le champ n'est pas requis
+        // if($imageFile) {
+        //     $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+        //     //Inclure le nom du fichier dans l'url
+        //     $safeFilename = $slugger->slug($originalFilename);
+        //     $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+
+        //     //Déplace le fichier vers le directory où les images sont enregistrées
+        //     try {
+        //         $imageFile->move(
+        //             $this->getParameter('images_directory'),
+        //             $newFilename
+        //         );
+        //     }
+
+        //     catch (FileException $e) {
+        //         return "Erreur";
+        //     }
+
+        //     $article->setImage($newFilename);
+        // }
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             if(!$article->getId()) {
-                $article->setCreatedAt(new \DateTime());
+                $article->setCreatedAt(new \DateTime()); 
             }
+
+            $file = $form->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $fileName);
+            $article->setImage($fileName);
 
             $manager->persist($article);
             $manager->flush();

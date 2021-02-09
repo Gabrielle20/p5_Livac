@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\APINews;
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Repository\ArticleRepository;
 
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,10 +79,28 @@ class FrontController extends AbstractController
     /**
      * @Route("/api/news", name="api_news")
      */
-    public function getNewsFromApi(APINews $apiNews, Request $request, EntityManagerInterface $manager) {
-        // Se connecte à Doctrine
-        // Regarde si les infos sont trop vielles, si oui
-        // Récupère les nouvelles
-        // Enregistre les nouvelles infos dans Doctrine
+    public function getActus(APINews $actus) {
+        $opts = array(
+            'http' => array(
+                'method' => "GET",
+                'header' => "Accept-language: en\r\n" . 
+                            "Cookie: foo=bar\r\n",
+                'proxy'=>"tcp://10.54.1.39:8000"
+            )
+        );
+
+        $context = stream_context_create($opts);
+
+        $fp = fopen('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c', 'r', false, $context);
+
+        $news = $actus->getJson();
+        $limit - (new \DateTime("now"))->modify('+25 minutes');
+        if($news["update"] > $limit) {
+            $newData = file_get_contents('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c');
+            $actus->update($newData);
+            return $this->json($newData);
+        }
+
+        return $this->json($news["json"]);
     }
 }

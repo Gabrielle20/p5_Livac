@@ -29,7 +29,7 @@
                                 <p class="lead">{{ article.entete}}</p>
                                 {# <p>It uses utility classes for typography and spacing to space content out within the
                                     larger container.</p> #}
-                                <img src="{{ article.image }}">
+                                    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="">
                             </div>
                             <hr class="my-4">
                         </div>
