@@ -85,44 +85,17 @@ class BackController extends AbstractController
 
         $form = $this->createForm(ArticleType::class, $article);
 
-        // /**@var UploadedFile $imageFile */
-        // $imageFile = $form->get('image')->getData();
-        // // dd($imageFile);
-                
-        // //Nécessaire car le champ n'est pas requis
-        // if($imageFile) {
-        //     $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-        //     //Inclure le nom du fichier dans l'url
-        //     $safeFilename = $slugger->slug($originalFilename);
-        //     $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-
-        //     //Déplace le fichier vers le directory où les images sont enregistrées
-        //     try {
-        //         $imageFile->move(
-        //             $this->getParameter('images_directory'),
-        //             $newFilename
-        //         );
-        //     }
-
-        //     catch (FileException $e) {
-        //         return "Erreur";
-        //     }
-
-        //     $article->setImage($newFilename);
-        // }
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            if(!$article->getId()) {
+            if(!$article->getId() && !$article->getImage()) {
                 $article->setCreatedAt(new \DateTime()); 
+                $file = $form->get('image')->getData();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('images_directory'), $fileName);
+                $article->setImage($fileName);
             }
 
-            $file = $form->get('image')->getData();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('images_directory'), $fileName);
-            $article->setImage($fileName);
 
             $manager->persist($article);
             $manager->flush();

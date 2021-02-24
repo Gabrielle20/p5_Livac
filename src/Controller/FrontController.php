@@ -7,6 +7,7 @@ use App\Entity\Article;
 use App\Entity\Comment;
 
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +75,20 @@ class FrontController extends AbstractController
             'comment'        => $comment
         ]);
     }
+
+
+    /**
+     * @Route("/comment/{id}/report", name="report")
+     */
+    public function reportComment($id, Request $request, EntityManagerInterface $manager) {
+        $reportComment = $manager->createQuery('UPDATE App\Entity\Comment a SET a.signalement = "1" WHERE a.id =' .$id);
+        dd();
+        $commentReported = $reportComment->getResult();
+
+        return $this->redirectToRoute('show');
+    }
+
+
 
 
     /**

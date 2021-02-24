@@ -55,4 +55,5 @@ class APINews
 
         return $this;
     }
+
 }

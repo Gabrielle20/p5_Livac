@@ -28,7 +28,7 @@ security:
 
             logout:
                 path: security_logout
-                target: out
+                # target: out
 
             # provider: users_in_memory
 

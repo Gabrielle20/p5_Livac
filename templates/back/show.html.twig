@@ -56,6 +56,8 @@
                     <small>{{ comment.author }}</small>
                     <small>{{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</small>
                 </div>
+                <br>
+                <a href="/comment/{id}/report" class="btn btn-outline-danger btn-sm">Signaler le commentaire</a>
             </div>
         </div>
         <br/>
@@ -65,3 +67,7 @@
 <br/><br/><br/>
 
 {% endblock %}
+
+
+
+{# {{ path('report', {'id': id }) }} #}
