@@ -57,7 +57,14 @@
                     <small>{{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</small>
                 </div>
                 <br>
-                <a href="/comment/{id}/report" class="btn btn-outline-danger btn-sm">Signaler le commentaire</a>
+                {% if comment.signalement == 1 %}
+                    <div class="alert alert-dismissible alert-primary">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Le commentaire a été signalé</strong>
+                    </div>
+                {% else %}
+                    <a href="/comment/{{ article.id }}/{{ comment.id }}/report" class="btn btn-outline-danger btn-sm">Signaler le commentaire</a>
+                {% endif %}
             </div>
         </div>
         <br/>
@@ -67,7 +74,3 @@
 <br/><br/><br/>
 
 {% endblock %}
-
-
-
-{# {{ path('report', {'id': id }) }} #}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Auteur</th>
+                <th scope="col">Commentaire</th>
+                <th scope="col">Date</th>
+                <th scope="col">Article</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+
+        <br/>
+
+        {% if comments == null %}
+            Aucun commentaire n'a été signalé
+
+            <br/><br/>
+
+        {% else %}
+            {% for comment in comments %}
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ comment.author }}</td>
+                        <td scope="row">{{ comment.content }}</td>
+                        <td scope="row">{{ comment.createdAt|date('d/m/Y') }}</td>
+                        <td scope="row"></td>
+                        <td>
+                            <a href="{{ path('back_delete_comments', {'id': comment.id}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+{% endblock %}

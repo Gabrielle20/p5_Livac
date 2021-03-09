@@ -78,44 +78,29 @@ class FrontController extends AbstractController
 
 
     /**
-     * @Route("/comment/{id}/report", name="report")
+     * @Route("/comment/{idArticle}/{idComment}/report", name="report")
      */
-    public function reportComment($id, Request $request, EntityManagerInterface $manager) {
-        $reportComment = $manager->createQuery('UPDATE App\Entity\Comment a SET a.signalement = "1" WHERE a.id =' .$id);
-        dd();
+    public function reportComment($idArticle, $idComment, Request $request, EntityManagerInterface $manager) {
+        $reportComment = $manager->createQuery('UPDATE App\Entity\Comment a SET a.signalement = 1 WHERE a.id =' .$idComment);
         $commentReported = $reportComment->getResult();
 
-        return $this->redirectToRoute('show');
+        return $this->redirectToRoute('show', [
+            'id' => $idArticle,
+        ]);
     }
 
 
 
 
-    /**
-     * @Route("/api/news", name="api_news")
-     */
-    public function getActus(APINews $actus) {
-        $opts = array(
-            'http' => array(
-                'method' => "GET",
-                'header' => "Accept-language: en\r\n" . 
-                            "Cookie: foo=bar\r\n",
-                'proxy'=>"tcp://10.54.1.39:8000"
-            )
-        );
+   
+    //     $news = $actus->getJson();
+    //     $limit - (new \DateTime("now"))->modify('+25 minutes');
+    //     if($news["update"] > $limit) {
+    //         $newData = file_get_contents('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c');
+    //         $actus->update($newData);
+    //         return $this->json($newData);
+    //     }
 
-        $context = stream_context_create($opts);
-
-        $fp = fopen('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c', 'r', false, $context);
-
-        $news = $actus->getJson();
-        $limit - (new \DateTime("now"))->modify('+25 minutes');
-        if($news["update"] > $limit) {
-            $newData = file_get_contents('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c');
-            $actus->update($newData);
-            return $this->json($newData);
-        }
-
-        return $this->json($news["json"]);
-    }
+    //     return $this->json($news["json"]);
+    // }
 }

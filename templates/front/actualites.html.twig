@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %} 
+
+
+{% block body %}
+
+    {% for actu in actu %}
+
+    <div class="jumbotron">
+        {# <a href="{{ path('show', {'id': article.id}) }}"> #}
+            <h1 class="display-3">{{ actu.json }}</h1>
+        {# </a> #}
+        {# <small></small>
+        <hr class="my-4">
+        <p class="lead">{{ article.entete}}</p>
+        {# <p>It uses utility classes for typography and spacing to space content out within the
+            larger container.</p> #}
+        {# <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="">  #}
+    </div>
+
+    {% endfor %}
+
+{% endblock %}

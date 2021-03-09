@@ -18,6 +18,14 @@ img {
     display:block
 }
 
+/* #header {
+    box-shadow: 1px 1px 10px grey;
+}
+
+.jumbotron #header:hover{
+    text-decoration: none;
+} */
+
 h1 .login {
     text-align:left;
 }
@@ -38,6 +46,10 @@ h1 .login {
     color:white;
     font-size:2rem;
     font-weight:500;
+}
+
+#reported-comment {
+    /* background-color: rgba(255, 0, 0, 0.50); */
 }
 
 

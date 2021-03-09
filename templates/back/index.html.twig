@@ -26,18 +26,41 @@
     
         <div class="col-6">
             <div class="lastCommentaires">
+                <h5>Commentaires signalés :</h5>
+                {% for reportedComments in reportedComments %}
+                <div class="list-group">
+                    <a href="{{ path('back_comment', {'id': reportedComments.id}) }}" id="reported-comment" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small>{{ reportedComments.createdAt | date('d/m/Y')}}</small>
+        
+                        </div>
+                        <p class="mb-1">{{ reportedComments.content }}</p>
+                        {# <p class="mb-1">{{ reportedComments.article }}</p> #}
+                        <small>{{ reportedComments.author }}</small>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <br/> <br/>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="lastCommentaires">
                 <h5>Derniers commentaires postés :</h5>
                 {% for lastComment in lastTenComments %}
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <small>{{ lastComment.createdAt | date('d/m/Y')}}</small>
-                               
-                            </div>
-                            <p class="mb-1">{{ lastComment.content }}</p>
-                            <small>{{ lastComment.author }}</small>
-                        </a>
-                    </div>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small>{{ lastComment.createdAt | date('d/m/Y')}}</small>
+    
+                        </div>
+                        <p class="mb-1">{{ lastComment.content }}</p>
+                        <small>{{ lastComment.author }}</small>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </div>

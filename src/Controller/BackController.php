@@ -14,6 +14,7 @@ use App\Form\ArticleType;
 use App\Form\CategoryType;
 
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\SectionRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,12 +39,16 @@ class BackController extends AbstractController
         $queryComments = $manager->createQuery('SELECT c.author, c.content, c.createdAt FROM App\Entity\Comment c ORDER BY c.id DESC');
         $lastTenComments = $queryComments->getResult();
 
+        $queryReportedComments = $manager->createQuery('SELECT c.id, c.author, c.content, c.createdAt FROM App\Entity\Comment c WHERE c.signalement = 1');
+        $reportedComments = $queryReportedComments->getResult();
+
         $allCategories = $repo->findAll();
 
         return $this->render('back/index.html.twig', [
             'controller_name' => 'BackController',
             'lastTenArticles' => $lastTenArticles,
             'lastTenComments' => $lastTenComments,
+            'reportedComments' => $reportedComments,
             'allCategories'   => $allCategories
         ]);
     }
@@ -117,7 +122,7 @@ class BackController extends AbstractController
     /**
      * @Route("/back/{id}/delete", name="back_delete")
      */
-    public function delete($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
+    public function deleteArticle($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
 
         $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
         $deleted = $delete->getResult();
@@ -260,7 +265,6 @@ class BackController extends AbstractController
     }
 
 
-
     /**
      * @Route("/back/{id}/delete", name="back_delete_section")
      */
@@ -273,4 +277,24 @@ class BackController extends AbstractController
 
     }
 
+
+     /**
+     * @Route("/back/comments", name="back_comment")
+     */
+    public function manageComments(CommentRepository $repo, EntityManagerInterface $manager, Request $request) {
+        $reportedComments = $repo->findBy(array('signalement' => 1));
+
+        return $this->render('back/comments.html.twig', ['comments' => $reportedComments]);
+    }
+
+
+    /**
+     * @Route("back/comment/{id}/delete", name="back_delete_comments")
+     */
+    public function deleteComments($id, Comment $comment = null, Request $request, EntityManagerInterface $manager) {
+        $delete = $manager->createQuery('DELETE App\Entity\Comment c WHERE c.id=' .$id);
+        $deletedComment = $delete->getResult();
+
+        return $this->redirectToRoute('back_comment');
+    }
 }
