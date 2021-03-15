@@ -2,39 +2,46 @@
 
 {% block title %}LIVAC{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.320.css">
+    <link rel="stylesheet" href="../css/style.min.768.css">
+    <link rel="stylesheet" href="../css/style.pad.1112.css">
+{% endblock %}
+
 {% block body %}
 <br /><br /><br />
 
-    <div class="diaporama">
 
-    </div>
-
-    <h2></h2>
-
+    <div class="jumbotron"><a href="{{ path('api') }}" id="header">
+        <h1 class="display-3">Actualités du jour</h1>
+        {# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p> #}
+    </a></div>
     <div class="main-wrapper">
-        <div class="jumbotron"><a href="{{ path('api') }}" id="header">
-            <h1 class="display-3">Actualités du jour</h1>
-            {# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-                featured content or information.</p>
-            <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p> #}
-        </a></div>
         <div class="row">
             <div class="col-7">
                 <div class="main">
                     <diaporama></diaporama>
     
                     {% for article in articles %}
-                    <div class="col-7">
                         <div class="a-la-une main">
                             <div class="jumbotron">
                                 <a href="{{ path('show', {'id': article.id}) }}">
                                     <h1 class="display-3">{{ article.title }}</h1>
                                 </a>
-                                <small></small>
+                                <div class="article-infos">
+                                    <small>Auteur : {{ article.author }}</small> |
+                                    <small>Publié le : {{ article.createdAt | date('d/m/Y') }}</small>
+                                    <br/>
+                                    <small>Catégorie : {{ article.category.title }}</small>
+                                </div>
                                 <hr class="my-4">
                                 <p class="lead">{{ article.entete}}</p>
                                 {# <p>It uses utility classes for typography and spacing to space content out within the
@@ -45,7 +52,7 @@
                         </div>
     
                         <div class="row">
-                            <div class="col-4">
+                            {# <div class="col-4">
                                 <div class="a-la-une small">
                                     <div class="card mb-3">
                                         <h3 class="card-header">Card header</h3>
@@ -70,8 +77,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-4">
+                            </div> #}
+                            {# <div class="col-4">
                                 <div class="a-la-une small">
                                     <div class="card mb-3">
                                         <h3 class="card-header">Card header</h3>
@@ -96,8 +103,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-4">
+                            </div> #}
+                            {# <div class="col-4">
                                 <div class="a-la-une small">
                                     <div class="card mb-3">
                                         <h3 class="card-header">Card header</h3>
@@ -122,15 +129,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> #}
                         </div>
-                    </div>
                     <br /><br />
                     {% endfor %}
                 </div>
             </div>
     
-            <div class="col-3">
+            <div class="col-4">
                 <div class="side">
                     <div class="a-lire">
                         <h5>À lire :</h5>
@@ -142,7 +148,7 @@
                                     <small>{{ lastTen.createdAt | date('d/m/Y') }}</small>
                                 </div>
                                 <p class="mb-1">{{ lastTen.entete }}</p>
-                                <small>{{ lastTen.author }}</small>
+                                <small class="text-muted">{{ lastTen.author }}</small>
                             </a>
                             {% endfor %}
                         </div>

@@ -1,22 +1,41 @@
 {% extends 'base.html.twig' %} 
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.320.css">
+    <link rel="stylesheet" href="../css/style.min.768.css">
+    <link rel="stylesheet" href="../css/style.pad.1112.css">
+{% endblock %}
 
 {% block body %}
-
-    {% for actu in actu %}
-
-    <div class="jumbotron">
-        {# <a href="{{ path('show', {'id': article.id}) }}"> #}
-            <h1 class="display-3">{{ actu.json }}</h1>
-        {# </a> #}
-        {# <small></small>
-        <hr class="my-4">
-        <p class="lead">{{ article.entete}}</p>
-        {# <p>It uses utility classes for typography and spacing to space content out within the
-            larger container.</p> #}
-        {# <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="">  #}
+<br/><br/>
+    <div class="api-container">
+        {% for actu in actus.json %}
+        <div class="col-4">
+            <div class="card mb-3">
+                <h3 class="card-header"></h3>
+                <div class="card-body">
+                    <a href="{{ actu.url }}"><h5 class="card-title">{{ actu.title }}</h5></a>
+                    <h6 class="card-subtitle text-muted">{{ actu.author }}</h6>
+                    <small>{{ actu.publishedAt| date('d/m/Y H:i:s') }}</small>
+                </div>
+                <img src="{{ actu.urlToImage }}" class="api-img">
+                <div class="card-body">
+                    <p class="card-text">{{ actu.description }}</p>
+                </div>
+                {# <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div> #}
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </div>
+            
+        {% endfor %}
     </div>
 
-    {% endfor %}
 
 {% endblock %}

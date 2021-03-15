@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class BackController extends AbstractController
@@ -177,6 +178,10 @@ class BackController extends AbstractController
 
         $category = $repo->findAll();
 
+        // $totalArticlesByCategory = $manager->createQuery('SELECT COUNT(*) FROM App\Entity\Article a WHERE categoryId = '. $id);
+
+        // $totalArticlesInPolitiques = $manager->createQuery('SELECT COUNT(*) FROM App\Entity\Article a WHERE categoryId = 4');
+
         $totalArticles = $articleRepo->createQueryBuilder("article")->select('count(article.category)')
                                          ->getQuery()
                                          ->getSingleScalarResult();
@@ -186,7 +191,9 @@ class BackController extends AbstractController
         return $this->render('back/category.html.twig', [
             'formCategory' => $form->createView(),
             'category'     => $category,
-            'totalCategories' => $totalArticles
+            'totalCategories' => $totalArticles,
+            // 'totalArticlesInPolitiques' => $totalArticlesInPolitiques
+            // 'totalArticlesByCategory' => $totalArticlesByCategory
         ]);
 
     }

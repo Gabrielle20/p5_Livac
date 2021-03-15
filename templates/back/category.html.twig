@@ -2,6 +2,14 @@
 
 {% form_theme formCategory 'bootstrap_4_layout.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.320.css">
+    <link rel="stylesheet" href="../css/style.min.768.css">
+    <link rel="stylesheet" href="../css/style.pad.1112.css">
+{% endblock %}
+
 {% block body %}
 
     <h1>Création d'une nouvelle catégorie </h1>
@@ -29,6 +37,7 @@
             <tbody>
                 <tr>
                     <th scope="row">{{ category.title }}</th>
+                    {# <th scope="row">{{ totalArticlesByCategory|raw }}</th> #}
                     <td>{{ totalCategories|raw }}</td>
                     <td><a href="{{ path('back_edit_category', {'id': category.id}) }}" class="btn btn-primary">Modifier</a>
                         <a href="{{ path('back_delete_category', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a>

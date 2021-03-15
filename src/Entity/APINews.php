@@ -18,14 +18,14 @@ class APINews
     private $id;
 
      /**
-     * @ORM\Column(type="string", length=16777215)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $json;
+    private $json = [];
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    public $date;
 
     public function getId(): ?int
     {
@@ -33,12 +33,12 @@ class APINews
     }
 
 
-    public function getJson()
+    public function getJson($json)
     {
         return $this->json;
     }
 
-    public function setJson($json): self
+    public function setJson(array $json): self
     {
         $this->json = $json;
 

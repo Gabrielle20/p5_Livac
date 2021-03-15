@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.320.css">
+    <link rel="stylesheet" href="../css/style.min.768.css">
+    <link rel="stylesheet" href="../css/style.pad.1112.css">
+{% endblock %}
+
 {% block body %}
 
     <table class="table table-hover">
@@ -9,6 +17,7 @@
                 <th scope="col">Commentaire</th>
                 <th scope="col">Date</th>
                 <th scope="col">Article</th>
+                <th scope="col">Auteur de l'article</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -27,7 +36,8 @@
                         <td scope="row">{{ comment.author }}</td>
                         <td scope="row">{{ comment.content }}</td>
                         <td scope="row">{{ comment.createdAt|date('d/m/Y') }}</td>
-                        <td scope="row"></td>
+                        <td scope="row">{{comment.article.title }}</td>
+                        <td scope="row">{{comment.article.author }}</td>
                         <td>
                             <a href="{{ path('back_delete_comments', {'id': comment.id}) }}" class="btn btn-danger">Supprimer</a>
                         </td>

@@ -6,7 +6,6 @@ use App\Entity\APINews;
 use App\Repository\APINewsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,63 +18,19 @@ class ActualitesController extends AbstractController {
         return (object)$array;
     }
 
-
-
-    /**
-     * @Route("/api/actus", name="api")
-     * @return  [type]  [return description]
-     */
-    function getNews(APINewsRepository $repo){
-        // $api = $this->updateNews();
-        // dd($api);
-
-        //on récupère l'actu dans un objet $actualite
-        $manager = $this->getDoctrine()->getManager();
-
-        $queryActu = $manager->createQuery('SELECT a.id, a.date, a.json FROM App\Entity\APINews a');
-        $actu = $queryActu->getResult();
-
-        // dd($actu->date);
-
-        //Pour récupérer le dernier élément 
-        // $lastActu = $repo->findOneBy(
-        //     array('json'=>$actu),
-        //     array('id' => 'DESC')
-        // );
-
-        $firtsDownloadDateTime = new APINews();
-        $firtsDownloadDateTime->getDate();
-
-        //si la $actualite->date > 25 minutes $actualite->data = updateNews();
-        if($firtsDownloadDateTime->date > '25 minutes') {
-            $firtsDownloadDateTime->data = $this->updateNews();
-        }
-        //   $limit - (new \DateTime("now"))->modify('+25 minutes');
-        //   if($news["update"] > $limit) {
-        //       $newData = file_get_contents('https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c');
-        //       $actus->update($newData);
-        //       return $this->json($newData);
-        //   }
-
-        // }
-        // //envoyer la réponse sous forme de json $actualite
-
-        // return $this->json($api["json"]);
-
-
-        return $this->render('front/actualites.html.twig', [
-            'actu' => $actu
-        ]);
+    function objectToArray($object) {
+        return (array)$object;
     }
-    
-    
-    
+
+
+
     function updateNews(){
         $data = file_get_contents("https://newsapi.org/v2/top-headlines?country=fr&apiKey=3b19d13356dd4e0cacaaf5785135891c");
         
         //CONVERSION D'UN STRING EN ARRAY
-        // $obj = json_decode($data, true);
-        // $listOfArticles = $obj['articles'];
+        $obj = json_decode($data, true);
+        $listOfArticles = $obj['articles'];
+        
 
         //CONVERSION D'UN ARRAY EN OBJET
         // $listOfArticles = $this->arrayToObject($obj);
@@ -83,14 +38,52 @@ class ActualitesController extends AbstractController {
 
         //on enregitre dans la base
         $api = new APINews();
-        // dd(gettype($data));
-        $api->setJson($data);
-
+        // dd(gettype($api));
+        $api->setJson($listOfArticles);
         $api->setDate(new \DateTime());
-     
+        // dd($api);
+        
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($api);
         $manager->flush();
-        return $data;
+        return $listOfArticles;
+        
     }
+
+
+
+    /**
+     * @Route("/api/actus", name="api")
+     */
+    function getNews(APINewsRepository $repo, EntityManagerInterface $manager){
+        // $actu = $this->updateNews();
+        // dd($actu);
+
+
+        //on récupère l'actu dans un objet $actu
+        $queryActu = $manager->createQuery('SELECT a.id, a.date, a.json FROM App\Entity\APINews a ORDER BY a.id DESC')
+        ->setMaxResults(1);
+        $actus = $queryActu->getResult();
+        $actus = $actus[0];
+        // dd($actus);
+        // dd(gettype($actus['date']));
+
+        //CONVERSION D'UN OBJET EN ARRAY
+        // $queryToArray = $this->objectToArray($queryActu);
+        // $arrayRestoredFromDb = unserialize(base64_decode($queryActu));
+
+       $now = new \DateTime();
+       $ecart = $now->diff($actus['date']);
+   
+        if($ecart->i > 25) {
+            $actus = $this->updateNews();
+        }
+
+
+        return $this->render('front/actualites.html.twig', [
+            'actus' => $actus,
+        ]);
+    }
+
+    
 }

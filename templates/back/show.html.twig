@@ -1,12 +1,18 @@
 {% extends 'baseFront.html.twig' %}
 
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.320.css">
+    <link rel="stylesheet" href="../css/style.min.768.css">
+    <link rel="stylesheet" href="../css/style.pad.1112.css">
+{% endblock %}
 
 {% block body %}
 <br /><br />
 
 <article class="col-10">
-    <h1>{{ article.title }}</h1>
+    <h1 class="article-seul">{{ article.title }}</h1>
     <div class="metadata">
         Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
         <br />
