@@ -31,7 +31,7 @@
                     <diaporama></diaporama>
     
                     {% for article in articles %}
-                        <div class="a-la-une main">
+                        <div class="main-articles main">
                             <div class="jumbotron">
                                 <a href="{{ path('show', {'id': article.id}) }}">
                                     <h1 class="display-3">{{ article.title }}</h1>
@@ -41,6 +41,7 @@
                                     <small>Publié le : {{ article.createdAt | date('d/m/Y') }}</small>
                                     <br/>
                                     <small>Catégorie : {{ article.category.title }}</small>
+                                    {# <small>Section : {{ article.section.title }}</small> #}
                                 </div>
                                 <hr class="my-4">
                                 <p class="lead">{{ article.entete}}</p>
@@ -51,104 +52,26 @@
                             <hr class="my-4">
                         </div>
     
-                        <div class="row">
-                            {# <div class="col-4">
-                                <div class="a-la-une small">
-                                    <div class="card mb-3">
-                                        <h3 class="card-header">Card header</h3>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none"
-                                            width="100%" height="150" aria-label="Placeholder: Image cap" focusable="false"
-                                            role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-                                            style="font-size:1.125rem;text-anchor:middle">
-                                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                                        </svg>
-                                        <div class="card-body">
-                                            <p class="card-text">Some quick example text to build on the card title and make
-                                                up the bulk of the
-                                                card's content.</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="#" class="card-link">Card link</a>
-                                            <a href="#" class="card-link">Another link</a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            2 days ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> #}
-                            {# <div class="col-4">
-                                <div class="a-la-une small">
-                                    <div class="card mb-3">
-                                        <h3 class="card-header">Card header</h3>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none"
-                                            width="100%" height="150" aria-label="Placeholder: Image cap" focusable="false"
-                                            role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-                                            style="font-size:1.125rem;text-anchor:middle">
-                                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                                        </svg>
-                                        <div class="card-body">
-                                            <p class="card-text">Some quick example text to build on the card title and make
-                                                up the bulk of the
-                                                card's content.</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="#" class="card-link">Card link</a>
-                                            <a href="#" class="card-link">Another link</a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            2 days ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> #}
-                            {# <div class="col-4">
-                                <div class="a-la-une small">
-                                    <div class="card mb-3">
-                                        <h3 class="card-header">Card header</h3>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none"
-                                            width="100%" height="150" aria-label="Placeholder: Image cap" focusable="false"
-                                            role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-                                            style="font-size:1.125rem;text-anchor:middle">
-                                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                                        </svg>
-                                        <div class="card-body">
-                                            <p class="card-text">Some quick example text to build on the card title and make
-                                                up the bulk of the
-                                                card's content.</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="#" class="card-link">Card link</a>
-                                            <a href="#" class="card-link">Another link</a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            2 days ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> #}
-                        </div>
                     <br /><br />
                     {% endfor %}
+
                 </div>
             </div>
+
     
             <div class="col-4">
                 <div class="side">
                     <div class="a-lire">
                         <h5>À lire :</h5>
                         <div class="list-group">
-                            {% for lastTen in lastTenArticles %}
-                            <a href="{{ path('show', {'id': lastTen.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                            {% for aLire in aLire %}
+                            <a href="{{ path('show', {'id': aLire.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{ lastTen.title }}</h5>
-                                    <small>{{ lastTen.createdAt | date('d/m/Y') }}</small>
+                                    <h5 class="mb-1">{{ aLire.title }}</h5>
+                                    <small>{{ aLire.createdAt | date('d/m/Y') }}</small>
                                 </div>
-                                <p class="mb-1">{{ lastTen.entete }}</p>
-                                <small class="text-muted">{{ lastTen.author }}</small>
+                                <p class="mb-1">{{ aLire.entete }}</p>
+                                <small class="text-muted">{{ aLire.author }}</small>
                             </a>
                             {% endfor %}
                         </div>
@@ -174,6 +97,85 @@
                       </div>
 
                 </div>
+            </div>
+
+        </div>
+
+        <div class="sections">
+            <div class="section-row">
+                <div class="col-3">
+                    <div>
+                        <h4>Politique :</h4>
+                        {% for articlesPolitique in articlesPolitique %}
+                            <div class="list-group">
+                                <a href="{{ path('show', {'id': articlesPolitique.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    {# <div class="d-flex w-100 justify-content-between"> #}
+                                        <h5 class="mb-1">{{ articlesPolitique.title }}</h5>
+                                        <small class="text-muted">{{ articlesPolitique.entete }}</small>
+                                    {# </div> #}
+                                    {# <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+                                    </p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small> #}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div>
+                        <h4>Juridique :</h4>
+                        {% for articlesJuridique in articlesJuridique %}
+                            <div class="list-group">
+                                <a href="{{ path('show', {'id': articlesJuridique.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    {# <div class="d-flex w-100 justify-content-between"> #}
+                                        <h5 class="mb-1">{{ articlesJuridique.title }}</h5>
+                                        <small class="text-muted">{{ articlesJuridique.entete }}</small>
+                                    {# </div> #}
+                                    {# <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+                                    </p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small> #}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div>
+                        <h4>Économie :</h4>
+                        {# {% for articlesDroitsFamille in articlesDroitsFamille %}
+                            <div class="list-group">
+                                <a href="{{ path('show', {'id': articlesDroitsFamille.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    {# <div class="d-flex w-100 justify-content-between"> #}
+                                        {# <h5 class="mb-1">{{ articlesDroitsFamille.title }}</h5> #}
+                                        {# <small class="text-muted">{{ articlesDroitsFamille.entete }}</small> #}
+                                    {# </div> #}
+                                    {# <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+                                    </p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small> #}
+                                {#</a>
+                            </div>
+                        {% endfor %} #}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div>
+                        <h4>Société :</h4>
+                        {% for articlesSociété in articlesSociété %}
+                            <div class="list-group">
+                                <a href="{{ path('show', {'id': articlesSociété.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    {# <div class="d-flex w-100 justify-content-between"> #}
+                                        <h5 class="mb-1">{{ articlesSociété.title }}</h5>
+                                        <small class="text-muted">{{ articlesSociété.entete }}</small>
+                                    {# </div> #}
+                                    {# <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+                                    </p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small> #}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

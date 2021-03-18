@@ -1,8 +1,3 @@
-img {
-    width: 500px;
-}
-
-
 .dropdown {
     position:relative;
     display:inline-block;
@@ -39,7 +34,12 @@ h1 .login {
 }
 
 .jumbotron {
-    padding: 2rem;
+    padding: 1rem;
+    /* max-height:500px; */
+}
+
+.jumbotron h1 {
+    font-size:2rem;
 }
 
 .article-infos {
@@ -54,6 +54,10 @@ h1 .login {
     color:white;
     font-size:2rem;
     font-weight:500;
+}
+
+.section-row {
+    display:flex;
 }
 
 

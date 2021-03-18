@@ -22,27 +22,47 @@ class FrontController extends AbstractController
      */
     public function index(ArticleRepository $articleRepo, CategoryRepository $repo, EntityManagerInterface $manager): Response
     {
-        //SIDE LAST ARTICLES
-        $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a ORDER BY a.id DESC');
-        $lastTenArticles = $queryArticles->getResult();
+        //MAIN
+        $articles = $articleRepo->findBy([], ['id' => 'DESC']);
+
+        //SECTION  À LIRE
+        $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.section = 2 ORDER BY a.id DESC');
+        $aLire = $queryArticles->getResult();
+
+        //SECTION POLITIQUE
+        // $sectionPolitique = $articleRepo->findBy(['section' => 'opinion']);
+        $queryArticlesPolitique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 1 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesPolitique = $queryArticlesPolitique->getResult();
+
+        //CATEGORIE JURIDIQUE
+        $queryArticlesJuridique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 2 and a.category = 3 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesJuridique = $queryArticlesJuridique->getResult();
+
+        //CATEGORIE ECONOMIE
+        $queryArticlesDroitsFamille = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 3 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesDroitsFamille = $queryArticlesDroitsFamille->getResult();
+
+        //CATEGORIE SOCIETE
+        $queryArticlesSociété = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 4 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesSociété = $queryArticlesSociété->getResult();
+
+        //CATEGORIE OPINION
+        $queryArticlesOpinion = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 5 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesOpinion = $queryArticlesOpinion->getResult();
 
         //SIDE CATEGORIES  
         $allCategories = $repo->findAll();
-
-        //MAIN
-        $articles = $articleRepo->findAll();
-
-        //MAIN À LA UNE
-        $querySectionUne = $manager->createQuery('SELECT a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a');
-        $sectionUne = $querySectionUne->getResult();
 
 
         return $this->render('front/index.html.twig', [
             'controller_name' => 'FrontController',
             'articles' => $articles,
-            'lastTenArticles' => $lastTenArticles,
+            'aLire' => $aLire,
             'allCategories' => $allCategories,
-            'sectionUne' => $sectionUne
+            'articlesPolitique' => $articlesPolitique,
+            'articlesJuridique' => $articlesJuridique,
+            'articlesSociété' => $articlesSociété,
+            'articlesOpinion' => $articlesOpinion
         ]);
     }
 

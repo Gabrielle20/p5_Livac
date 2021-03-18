@@ -1,6 +1,3 @@
-// const myHeading = document.querySelector('h2');
-// myHeading.textContent = 'Hello World!';
-
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -24,8 +21,13 @@ document.querySelectorAll("a.btn-danger").onclick = function() {
     alert('Voulez-vous vraiment supprimer cet article ?');
 }
 
+let deleteConfirmationButton = document.querySelector('button#delete');
+
+// function ();
+
+//SESSION STORAGE
 let mybutton = document.querySelector('button#login');
-console.log(mybutton);
+// console.log(mybutton);
 
 function setUserName() {
     let myName = prompt('Please enter your name.');

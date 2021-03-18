@@ -71,7 +71,7 @@ class BackController extends AbstractController
      * @Route("/back/articles", name="back_liste_articles")
      */
     public function getBackListArticles(ArticleRepository $repo) {
-        $articles = $repo->findAll();
+        $articles = $repo->findAll([], ['id' => 'DESC']);
 
         return $this->render('back/articles.html.twig', ['articles' => $articles]);
     }
@@ -101,10 +101,11 @@ class BackController extends AbstractController
                 $file->move($this->getParameter('images_directory'), $fileName);
                 $article->setImage($fileName);
             }
-
-
+            
+            
             $manager->persist($article);
             $manager->flush();
+            
 
             return $this->redirectToRoute('show', ['id' => $article->getId()]);
         }
@@ -112,7 +113,8 @@ class BackController extends AbstractController
         return $this->render('back/create.html.twig', [
             'formArticle' => $form->createView(),
             'editMode' => $article->getId() !== null,
-            'id'       => $article->getId()
+            'id'       => $article->getId(),
+            // 'articleImage' => $article->getImage()
         ]);
     }
 
@@ -273,7 +275,7 @@ class BackController extends AbstractController
 
 
     /**
-     * @Route("/back/{id}/delete", name="back_delete_section")
+     * @Route("/back/section/{id}/delete", name="back_delete_section")
      */
     public function deleteSection($id, Request $request, EntityManagerInterface $manager) {
 
