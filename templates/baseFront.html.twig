@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Catégories</a>
+                        <a class="nav-link" href="{{ path('api') }}">Actualités</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
@@ -52,7 +52,7 @@
         </div>
         {% block javascripts %}
             <script src="js/main.js"></script>
-            <script src="js/news.js"></script>
+            <script src="js/diaporama.js"></script>
         {% endblock %}
     </body>
 </html>

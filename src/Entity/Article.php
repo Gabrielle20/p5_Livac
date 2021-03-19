@@ -35,6 +35,7 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Url(message = "L'url de votre image n'est pas valide")
+     * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
      */
     private $image;
 

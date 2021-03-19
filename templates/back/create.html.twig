@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.320.css">
+    <link rel="stylesheet" href="css/style.min.768.css">
+    <link rel="stylesheet" href="css/style.pad.1112.css">
+{% endblock %}
+
 {% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-
-{% block stylesheets %}
-    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/style.min.320.css">
-    <link rel="stylesheet" href="../css/style.min.768.css">
-    <link rel="stylesheet" href="../css/style.pad.1112.css">
-{% endblock %}
 
     <h1>
         {% if editMode %}
@@ -29,7 +29,7 @@
     
     {{ form_row(formArticle.image) }}
 
-    {# <img src="{{ articleImage.image }}"> #}
+    <img src="/uploads/images/{{ articleImage }}">
     
     {{ form_row(formArticle.content, {'attr': {'placeholder': "Contenu de l'article"}}) }}
     
@@ -48,13 +48,22 @@
     </button>
     
     {% if editMode %}
-        <a href="{{ path('back_delete', {'id': id }) }}" class="btn btn-danger">
-            Supprimer l'article
-        </a>
+        {# {% if deletingTrial %} #}
+            <a href="{{ path('back_delete', {'id': id }) }}" class="btn btn-danger" id="delete">
+                Supprimer l'article
+            </a>
+        {# {% else %}
+            Cet article ne peut être supprimé
+        {% endif %} #}
     {% endif %}
 
         <br/><br/>
 
     {{ form_end(formArticle) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="../../js/main.js"></script>
+    
 {% endblock %}

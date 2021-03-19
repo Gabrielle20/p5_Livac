@@ -114,7 +114,7 @@ class BackController extends AbstractController
             'formArticle' => $form->createView(),
             'editMode' => $article->getId() !== null,
             'id'       => $article->getId(),
-            // 'articleImage' => $article->getImage()
+            'articleImage' => $article->getImage()
         ]);
     }
 
@@ -127,10 +127,16 @@ class BackController extends AbstractController
      */
     public function deleteArticle($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
 
-        $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
-        $deleted = $delete->getResult();
-        
-        return $this->redirectToRoute('back_liste_articles');
+        // if(!$article->getComments()) {
+            $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
+            $deleted = $delete->getResult();
+            
+            return $this->redirectToRoute('back_liste_articles');
+        // }
+
+    //    return $this->render('back/create.html.twig', [
+    //        'deletingTrial' => $article->getComments() !== null
+    //    ]);
 
     }
 

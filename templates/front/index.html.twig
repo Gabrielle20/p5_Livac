@@ -14,7 +14,7 @@
 <br /><br /><br />
 
 
-    <div class="jumbotron"><a href="{{ path('api') }}" id="header">
+    {# <div class="jumbotron"><a href="{{ path('api') }}" id="header">
         <h1 class="display-3">Actualités du jour</h1>
         {# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
             featured content or information.</p>
@@ -23,12 +23,12 @@
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p> #}
-    </a></div>
+    {# </a></div> #} 
     <div class="main-wrapper">
         <div class="row">
             <div class="col-7">
                 <div class="main">
-                    <diaporama></diaporama>
+                    <div class="diaporama" id="diaporama"></div>
     
                     {% for article in articles %}
                         <div class="main-articles main">
@@ -52,7 +52,7 @@
                             <hr class="my-4">
                         </div>
     
-                    <br /><br />
+                    <br />
                     {% endfor %}
 
                 </div>
@@ -184,4 +184,9 @@
 
     <br/><br/><br/>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="js/main.js"></script>
+    <script src="js/diaporama.js"></script>
 {% endblock %}

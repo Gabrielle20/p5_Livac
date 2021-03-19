@@ -1,29 +1,28 @@
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
+// let deleteConfirmationButton = document.querySelectorAll('#delete');
+// function alertDelete() {
+//     let confirmation = alert('Êtes-vous sûr(e) de vouloir supprimer cet élément ?');
+// }
 
-window.onclick = function(event) {
-    if(!event.target.matches('.dropdown-toggle')) {
-        var dropdowns = document.getElementsByClassName("dropdown-menu");
-        var i;
-        for(i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
+// deleteConfirmationButton.onclick = function() {
+//     alertDelete();
+// }
 
 
+// const openPopup = document.querySelectorAll('#delete')
 
-document.querySelectorAll("a.btn-danger").onclick = function() {
-    alert('Voulez-vous vraiment supprimer cet article ?');
-}
+// openPopup.forEach(a => {
+//     a.addEventListener('click', ()=> {
+//         const modal = document.querySelector(#delete)
+//         openPopup(popup)
+//     })
+// })
 
-let deleteConfirmationButton = document.querySelector('button#delete');
+// function openPopup(popup) {
+//     if(popup == null) returnpopup.classList.add('active')
 
-// function ();
+// }
+
+
 
 //SESSION STORAGE
 let mybutton = document.querySelector('button#login');

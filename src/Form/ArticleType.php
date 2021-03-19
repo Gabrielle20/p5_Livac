@@ -17,6 +17,7 @@ class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // dd($options);
         $builder
             ->add('title')
             ->add('category', EntityType::class, [
@@ -28,14 +29,24 @@ class ArticleType extends AbstractType
                 'choice_label' => 'title'
             ])
             ->add('author')
-            ->add('entete')
-            ->add('image', FileType::class, [
-                'label' => 'Image',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [new File([])]
-            ])
-            ->add('content');
+            ->add('entete');
+
+            // $image = $options['data']->getImage();
+
+            // if (is_null($image)) {
+                $builder->add('image', FileType::class, [
+                        'label' => 'Image',
+                        'mapped' => false,
+                        'required' => false,
+                        'constraints' => [new File([])]
+                ]);
+            // }
+
+            // else {
+            //     $builder->add('image', null , array("attr"=> array(), 'required' => false));
+            // }
+
+            $builder->add('content');
     }
 
 
