@@ -13,11 +13,7 @@
 {% block body %}
 
     <h1>
-        {# {% if editMode %}
-            Modification de l'article
-        {% else %} #}
-            Création d'un nouvel article
-        {# {% endif %} #}
+        Modification de l'article
     </h1>
 
 
@@ -29,7 +25,7 @@
     
     {{ form_row(formArticle.image) }}
 
-    <img src="/uploads/images/{{ articleImage }}">
+    <img src="/uploads/images/{{ article.image }}">
     
     {{ form_row(formArticle.content, {'attr': {'placeholder': "Contenu de l'article"}}) }}
     
@@ -40,8 +36,12 @@
     {{ form_row(formArticle.section, {'label': "Section de l'article", 'attr': {'placeholder': "CatéSection de l'article"}}) }}
 
     <button type="submit" class="btn btn-success">
-        Ajouter l'article
+        Enregistrer les modifications
     </button>
+    
+            {# <a href="{{ path('back_delete', {'id': id }) }}" class="btn btn-danger" id="delete">
+                Supprimer l'article
+            </a> #}
 
         <br/><br/>
 

@@ -1,3 +1,8 @@
+.container {
+    max-width: 1200px;
+}
+
+
 .dropdown {
     position:relative;
     display:inline-block;
@@ -20,10 +25,6 @@
 .jumbotron #header:hover{
     text-decoration: none;
 } */
-
-.article-seul {
-    font-size: 5rem;
-}
 
 h1 .login {
     text-align:left;
@@ -58,6 +59,29 @@ h1 .login {
 
 .section-row {
     display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.section-row .col-3 {
+    margin-bottom: 1.5rem;
+}
+
+/* .section-row .col-3 .list-group {
+    width: 240px;
+}
+
+.section-row .col-3 .list-group a {
+    height: 100px;
+} */
+
+.section-row .col-3 .list-group h5 {
+    font-size: 0.7rem;
+}
+
+.section-row .col-3 .list-group p {
+    color:#919aa1!important;
+    font-size: 0.6rem;
 }
 
 .mt-4, .my-4 {

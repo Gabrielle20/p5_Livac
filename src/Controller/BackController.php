@@ -80,46 +80,67 @@ class BackController extends AbstractController
 
 
     /**
-     * @Route("/back/new", name="back_create")
-     * @Route("/back/{id}/edit", name="back_edit")
+     * @Route("/back/add", name="back_create")
      */
-    public function form(Article $article = null, Request $request, EntityManagerInterface $manager, SluggerInterface $slugger) {
-        
-        if(!$article) {
-            $article = new Article();
-        }
+    public function createArticle(Request $request, EntityManagerInterface $manager, SluggerInterface $slugger) {
+        $article = new Article();
 
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            if(!$article->getId() && !$article->getImage()) {
-                $article->setCreatedAt(new \DateTime()); 
-                $file = $form->get('image')->getData();
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                $file->move($this->getParameter('images_directory'), $fileName);
-                $article->setImage($fileName);
-            }
-            
-            
+            $article->setCreatedAt(new \DateTime()); 
+            $file = $form->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $fileName);
+            $article->setImage($fileName);
+
             $manager->persist($article);
             $manager->flush();
-            
 
             return $this->redirectToRoute('show', ['id' => $article->getId()]);
         }
 
         return $this->render('back/create.html.twig', [
             'formArticle' => $form->createView(),
-            'editMode' => $article->getId() !== null,
             'id'       => $article->getId(),
             'articleImage' => $article->getImage()
         ]);
     }
 
 
+     
+    /**
+     * @Route("/back/{id}/edit", name="back_edit")
+     */
+    public function editArticle(Article $article=null, int $id, ArticleRepository $repo, EntityManagerInterface $manager, Request $request, SluggerInterface $slugger) {
+        $editArticle = $repo->findOneBy(['id' => $id]);
 
+        $form = $this->createForm(ArticleType::class, $editArticle);
+    
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+            $file = $form->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $fileName);
+            $article->setImage($fileName);
+            
+            $manager->persist($article);
+            $manager->flush();
+
+            return $this->redirectToRoute('show', ['id' => $id]);
+        }
+
+        return $this->render('back/editArticle.html.twig', [
+            'formArticle' => $form->createView(),
+            'id'       => $editArticle,
+            'article' => $article
+        ]);
+    }
+    
 
 
     /**
@@ -128,6 +149,7 @@ class BackController extends AbstractController
     public function deleteArticle($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
 
         // if(!$article->getComments()) {
+            dd($id);
             $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
             $deleted = $delete->getResult();
             

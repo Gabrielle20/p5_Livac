@@ -59,14 +59,11 @@ class ActualitesController extends AbstractController {
         // $actu = $this->updateNews();
         // dd($actu);
 
-
         //on récupère l'actu dans un objet $actu
         $queryActu = $manager->createQuery('SELECT a.id, a.date, a.json FROM App\Entity\APINews a ORDER BY a.id DESC')
         ->setMaxResults(1);
         $actus = $queryActu->getResult();
         $actus = $actus[0];
-        // dd($actus);
-        // dd(gettype($actus['date']));
 
         //CONVERSION D'UN OBJET EN ARRAY
         // $queryToArray = $this->objectToArray($queryActu);

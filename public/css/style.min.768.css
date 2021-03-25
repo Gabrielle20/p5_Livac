@@ -1,16 +1,22 @@
+.container {
+    padding-right:0;
+    padding-left:0;
+    max-width:720px;
+}
+
+
 .display-3 {
     font-size:3.5rem;;
 }
 
-.row {
+.section-row {
     display: flex;
-    justify-content:space-between
-}
-
-.col-4 {
-    max-width:33.333333%;
 }
 
 .col-3 {
-    display:flex;
+    flex: 0 0 33.33%;
 }
+
+/* .col-3 {
+    display:flex;
+} */

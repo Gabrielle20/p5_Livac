@@ -23,7 +23,7 @@ class FrontController extends AbstractController
     public function index(ArticleRepository $articleRepo, CategoryRepository $repo, EntityManagerInterface $manager): Response
     {
         //MAIN
-        $articles = $articleRepo->findBy([], ['id' => 'DESC']);
+        $articles = $articleRepo->findBy(['section' => 1], ['id' => 'DESC']);
 
         //SECTION  À LIRE
         $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.section = 2 ORDER BY a.id DESC');
@@ -31,23 +31,23 @@ class FrontController extends AbstractController
 
         //SECTION POLITIQUE
         // $sectionPolitique = $articleRepo->findBy(['section' => 'opinion']);
-        $queryArticlesPolitique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 1 ORDER BY a.id DESC')->setMaxResults(4);
+        $queryArticlesPolitique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 1 AND a.section = 5 ORDER BY a.id DESC')->setMaxResults(4);
         $articlesPolitique = $queryArticlesPolitique->getResult();
 
         //CATEGORIE JURIDIQUE
-        $queryArticlesJuridique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 2 and a.category = 3 ORDER BY a.id DESC')->setMaxResults(4);
+        $queryArticlesJuridique = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 2 OR a.category = 3 AND a.section = 5 ORDER BY a.id DESC')->setMaxResults(4);
         $articlesJuridique = $queryArticlesJuridique->getResult();
 
         //CATEGORIE ECONOMIE
-        $queryArticlesDroitsFamille = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 3 ORDER BY a.id DESC')->setMaxResults(4);
-        $articlesDroitsFamille = $queryArticlesDroitsFamille->getResult();
+        $queryArticlesEconomie = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 6 AND a.section = 5 ORDER BY a.id DESC')->setMaxResults(4);
+        $articlesEconomie = $queryArticlesEconomie->getResult();
 
         //CATEGORIE SOCIETE
-        $queryArticlesSociété = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 4 ORDER BY a.id DESC')->setMaxResults(4);
+        $queryArticlesSociété = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 4 AND a.section = 5 ORDER BY a.id DESC')->setMaxResults(4);
         $articlesSociété = $queryArticlesSociété->getResult();
 
         //CATEGORIE OPINION
-        $queryArticlesOpinion = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 5 ORDER BY a.id DESC')->setMaxResults(4);
+        $queryArticlesOpinion = $manager->createQuery('SELECT a.id, a. title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.category = 5 AND a.section = 5 ORDER BY a.id DESC')->setMaxResults(4);
         $articlesOpinion = $queryArticlesOpinion->getResult();
 
         //SIDE CATEGORIES  
@@ -62,7 +62,8 @@ class FrontController extends AbstractController
             'articlesPolitique' => $articlesPolitique,
             'articlesJuridique' => $articlesJuridique,
             'articlesSociété' => $articlesSociété,
-            'articlesOpinion' => $articlesOpinion
+            'articlesOpinion' => $articlesOpinion,
+            'articlesEconomie' => $articlesEconomie
         ]);
     }
 

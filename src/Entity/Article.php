@@ -33,9 +33,7 @@ class Article
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Url(message = "L'url de votre image n'est pas valide")
-     * @Assert\File(mimeTypes={ "image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml"})
+     * @ORM\Column(type="string", length=255, nullable = true)
      */
     private $image;
 
@@ -59,7 +57,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 
