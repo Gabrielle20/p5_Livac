@@ -116,7 +116,8 @@ class BackController extends AbstractController
      */
     public function editArticle(Article $article=null, int $id, ArticleRepository $repo, EntityManagerInterface $manager, Request $request, SluggerInterface $slugger) {
         $editArticle = $repo->findOneBy(['id' => $id]);
-
+    
+        // dd($editArticle);
         $form = $this->createForm(ArticleType::class, $editArticle);
     
         $form->handleRequest($request);
@@ -136,7 +137,7 @@ class BackController extends AbstractController
 
         return $this->render('back/editArticle.html.twig', [
             'formArticle' => $form->createView(),
-            'id'       => $editArticle,
+            'id'       => $editArticle->getId(),
             'article' => $article
         ]);
     }
@@ -148,17 +149,11 @@ class BackController extends AbstractController
      */
     public function deleteArticle($id, Article $article = null, Request $request, EntityManagerInterface $manager) {
 
-        // if(!$article->getComments()) {
-            dd($id);
             $delete = $manager->createQuery('DELETE App\Entity\Article a WHERE a.id=' . $id);
             $deleted = $delete->getResult();
             
             return $this->redirectToRoute('back_liste_articles');
         // }
-
-    //    return $this->render('back/create.html.twig', [
-    //        'deletingTrial' => $article->getComments() !== null
-    //    ]);
 
     }
 

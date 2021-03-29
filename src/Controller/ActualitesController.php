@@ -56,7 +56,7 @@ class ActualitesController extends AbstractController {
      * @Route("/api/actus", name="api")
      */
     function getNews(APINewsRepository $repo, EntityManagerInterface $manager){
-        // $actu = $this->updateNews();
+        $actu = $this->updateNews();
         // dd($actu);
 
         //on récupère l'actu dans un objet $actu

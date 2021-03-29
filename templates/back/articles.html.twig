@@ -12,29 +12,36 @@
 
     <br/>
 
+    <div class="edit-container">
     {% for article in articles %}
-        <article>
-            <h1>{{ article.title }}</h1>
-            <div class="metadata">
-                Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
-                <br/>
-                Catégorie : {{ article.category.title }}
-                <br/>
-                {{ article.author }}
-            </div>
-
-            <div class="content">
-                <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="">
-                <br/>
-                {{ article.entete | raw }}
-            </div>
+            <article class="col-4">
+                <div class="card mb-3">
+                    <h3 class="card-header">{{ article.title }}</h3>
+                    <div class="card-body">
+                        <div class="metadata">
+                            Écrit le {{ article.createdAt | date('d/m/Y')}} à {{ article.createdAt | date('H:i')}}
+                            <br />
+                            Catégorie : {{ article.category.title }}
+                            <br />
+                            {{ article.author }}
+                        </div>
+                    </div>
+                    <div class="content">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ article.entete | raw }}</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ path('back_edit', {'id': article.id}) }}" class="btn btn-primary">Modifier</a>
+                    </div>
+                </div>
+            </article>
             <br/>
-            <a href="{{ path('back_edit', {'id': article.id}) }}" class="btn btn-primary">Modifier</a>
-        </article>
-        <br/>
-        <br/>
-        <br/>
-    {% endfor %}
+            <br/>
+            <br/>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}

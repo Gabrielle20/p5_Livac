@@ -55,10 +55,6 @@ class SecurityController extends AbstractController
      * @Route("/login", name="security_login")
      */
     public function login(SessionInterface $session) {
-        // $userConnect = $session->get('userConnect', []);
-
-        // $session->set('userConnect', $userConnect);
-
         return $this->render('security/login.html.twig');
     }
 
