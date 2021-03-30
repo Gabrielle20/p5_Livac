@@ -23,9 +23,9 @@ class FrontController extends AbstractController
     public function index(ArticleRepository $articleRepo, CategoryRepository $repo, EntityManagerInterface $manager): Response
     {
         //MAIN
-        // $articles = $articleRepo->findBy(['section' => 1], ['id' => 'DESC']);
-        $mainArticlesQuery = $manager->createQuery('SELECT a.id, a.title, a.author, a.image, a.entete, a.createdAt FROM App\Entity\Article a	WHERE a.section = 1');
-        $articles = $mainArticlesQuery->getResult();
+        $articles = $articleRepo->findBy(['section' => 1], ['id' => 'DESC']);
+        // $mainArticlesQuery = $manager->createQuery('SELECT a.id, a.title, a.author, a.image, a.entete, a.createdAt FROM App\Entity\Article a	WHERE a.section = 1');
+        // $articles = $mainArticlesQuery->getResult();
 
         //SECTION  À LIRE
         $queryArticles = $manager->createQuery('SELECT a.id, a.title, a.author, a.entete, a.createdAt FROM App\Entity\Article a WHERE a.section = 2 ORDER BY a.id DESC');

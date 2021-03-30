@@ -122,9 +122,11 @@ class BackController extends AbstractController
     
         $form->handleRequest($request);
 
+        
         if($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
             $file = $form->get('image')->getData();
+            // dd($file);
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move($this->getParameter('images_directory'), $fileName);
             $article->setImage($fileName);

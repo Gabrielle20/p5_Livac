@@ -55,8 +55,8 @@ img {
 }
 
 .col-4 {
-    -ms-flex: block;
-    flex:block;
+    -ms-flex: none;
+    flex:none;
     max-width:100%;
     margin-top: 3rem;
 }
@@ -74,8 +74,8 @@ img {
 }
 
 .col-3 {
-    -ms-flex:block;
-    flex:block;
+    -ms-flex:none;
+    flex:none;
     max-width:100%;
 }
 
@@ -99,5 +99,5 @@ img {
 h1 {
     letter-spacing:normal;
     text-align:center;
-    margin-bottom: Opx;
+    /* margin-bottom: Opx; */
 }
